@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guigu.dao.WarehouseDao">
+
+    <resultMap id="WarehouseMap" type="Warehouse">
+        <id column="w_id" property="wId"></id>
+        <result column="w_name" property="wName"></result>
+        <result column="w_coordinates" property="wCoordinates"></result>
+        <result column="w_note" property="wNote"></result>
+        <result column="w_province" property="wProvince"></result>
+        <result column="w_city" property="wCity"></result>
+        <result column="w_county" property="wCounty"></result>
+        <result column="w_detailed" property="wDetailed"></result>
+    </resultMap>
+
+    <select id="queryWarehouseById" resultMap="WarehouseMap" parameterType="Warehouse">
+        select * from warehouse where p_id = #{id}
+
+	</select>
+
+    <select id="queryAllWarehouse" resultMap="WarehouseMap" parameterType="Warehouse">
+        select * from warehouse
+        <where>
+            <if test="wName!=null">and w_name like concat('%',#{wName},'%')</if>
+        </where>
+	</select>
+
+    <select id="queryWarehouseCount" resultType="int"  parameterType="Warehouse">
+        select count(*) from warehouse
+        <where>
+            <if test="wName!=null">and w_name like concat('%',#{wName},'%')</if>
+        </where>
+	</select>
+
+    <insert id="addWarehouse">
+INSERT INTO `shoppingdb`.`warehouse` (
+  `w_name`,
+  `w_coordinates`,
+  `w_note`,
+  `w_province`,
+  `w_city`,
+  `w_county`,
+  `w_detailed`
+)
+VALUES
+  (
+    #{wName},
+    #{wCoordinates},
+    #{wNote},
+    #{wProvince},
+    #{wCity},
+    #{wCounty},
+    #{wDetailed}
+  ) ;
+    </insert>
+    <delete id="delWarehouse">
+        delete from `shoppingdb`.`warehouse` where w_id=#{id}
+    </delete>
+
+<update id="updWarehouse">
+UPDATE
+  `shoppingdb`.`warehouse`
+SET
+  `w_name` = #{wName},
+  `w_coordinates` = #{wCoordinates},
+  `w_note` = #{wNote},
+  `w_province` = #{wProvince},
+  `w_city` = #{wCity},
+  `w_county` = #{wCounty},
+  `w_detailed` = #{wDetailed}
+WHERE `w_id` = #{wId} ;
+</update>
+</mapper>

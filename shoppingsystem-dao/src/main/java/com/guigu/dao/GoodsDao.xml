@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guigu.dao.GoodsDao">
+
+    <resultMap id="goodsMap" type="goods">
+        <id column="g_id" property="gId"></id>
+        <result column="g_name" property="gName"></result>
+        <result column="g_img" property="gImg"></result>
+        <result column="g_price_into" property="gPriceInto"></result>
+        <result column="g_price_out" property="gPriceOut"></result>
+        <result column="g_describe" property="gDescribe"></result>
+        <result column="g_time" property="gTime"></result>
+        <result column="g_parent" property="gParent"></result>
+
+        <result column="g_child" property="gChild"></result>
+        <result column="g_num" property="gNum"></result>
+        <result column="g_final_sales" property="gFinalSales"></result>
+        <result column="g_final_purchase" property="gFinalPurchase"></result>
+
+        <collection property="goodsChildType" javaType="com.guigu.vo.GoodsChildType"
+                    column="g_parent" select="com.guigu.dao.GoodsChildDao.queryGoodsChildTypeById" fetchType="lazy">
+        </collection>
+        <collection property="goodsParentType" javaType="com.guigu.vo.GoodsParentType"
+                    column="g_child" select="com.guigu.dao.GoodsParentDao.queryGoodsParentTypeById" fetchType="lazy">
+        </collection>
+
+    </resultMap>
+
+    <select id="queryAllGoods" resultMap="goodsMap">
+		SELECT * FROM goods
+	</select>
+
+    <select id="queryAllGoodsCond" resultType="int">
+		SELECT count(*) FROM goods
+	</select>
+
+</mapper>
