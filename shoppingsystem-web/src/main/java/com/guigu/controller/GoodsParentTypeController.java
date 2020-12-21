@@ -21,10 +21,10 @@ public class GoodsParentTypeController {
 
     //查询出所有的菜单信息(员工登录 不同的员工有不同的菜单信息)
     @CrossOrigin
-    @RequestMapping(value="/queryAllGoodsParentType.action")
+    @RequestMapping(value="/queryAllGoodsParentType.action",produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public List<GoodsParentType> queryAllMenu(GoodsParentType goodsParentType) {
-        return service.queryAllGoodsParentType(goodsParentType);
+    public String queryAllMenu(GoodsParentType goodsParentType) {
+        return JSONObject.toJSONString(service.queryAllGoodsParentType(goodsParentType));
     }
     @CrossOrigin
     @RequestMapping(value="/addGoodsParentType.action")

@@ -29,6 +29,7 @@ public class WarehouseController {
                                           Warehouse warehouse) {
         return JSONObject.toJSONString(service.queryAllWarehouse(page,rows,warehouse));
     }
+
     @CrossOrigin
     @RequestMapping(value="/addWarehouse.action")
     @ResponseBody

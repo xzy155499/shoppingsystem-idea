@@ -10,7 +10,7 @@ public interface GoodsChildDao {
 
     List<GoodsChildType> queryAllGoodsChildType(int id);
 
-    List<GoodsChildType> queryGoodsChildTypeById(int id);
+    GoodsChildType queryGoodsChildTypeById(int id);
 
     int addGoodsChildType(GoodsChildType goodsChildType);
 

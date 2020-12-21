@@ -1,5 +1,8 @@
 package com.guigu.vo;
 
+
+import java.util.List;
+
 public class GoodsParentType {
     private Integer pId;
 
@@ -7,12 +10,15 @@ public class GoodsParentType {
 
     private String pDescribe;
 
+    private List<GoodsChildType> goodsChildType;
+
     @Override
     public String toString() {
         return "GoodsParentType{" +
                 "pId=" + pId +
                 ", pName='" + pName + '\'' +
                 ", pDescribe='" + pDescribe + '\'' +
+                ", goodsChildType=" + goodsChildType +
                 '}';
     }
 
@@ -40,10 +46,20 @@ public class GoodsParentType {
         this.pDescribe = pDescribe;
     }
 
-    public GoodsParentType(Integer pId, String pName, String pDescribe) {
+    public List<GoodsChildType> getGoodsChildType() {
+        return goodsChildType;
+    }
+
+    public void setGoodsChildType(List<GoodsChildType> goodsChildType) {
+        this.goodsChildType = goodsChildType;
+    }
+
+    public GoodsParentType(Integer pId, String pName, String pDescribe, List<GoodsChildType> goodsChildType) {
         this.pId = pId;
         this.pName = pName;
         this.pDescribe = pDescribe;
+        this.goodsChildType = goodsChildType;
     }
+
     public GoodsParentType(){}
 }

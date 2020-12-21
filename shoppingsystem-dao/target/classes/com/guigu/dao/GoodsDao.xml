@@ -20,20 +20,83 @@
         <result column="g_final_purchase" property="gFinalPurchase"></result>
 
         <collection property="goodsChildType" javaType="com.guigu.vo.GoodsChildType"
-                    column="g_parent" select="com.guigu.dao.GoodsChildDao.queryGoodsChildTypeById" fetchType="lazy">
+                    column="g_child" select="com.guigu.dao.GoodsChildDao.queryGoodsChildTypeById" fetchType="lazy">
         </collection>
         <collection property="goodsParentType" javaType="com.guigu.vo.GoodsParentType"
-                    column="g_child" select="com.guigu.dao.GoodsParentDao.queryGoodsParentTypeById" fetchType="lazy">
+                    column="g_parent" select="com.guigu.dao.GoodsParentDao.queryGoodsParentTypeById" fetchType="lazy">
         </collection>
-
     </resultMap>
 
-    <select id="queryAllGoods" resultMap="goodsMap">
+
+
+    <select id="queryGoodsById" resultMap="goodsMap">
+		SELECT * FROM goods where g_id =#{id}
+	</select>
+    <select id="queryAllGoods" resultMap="goodsMap" parameterType="goods">
 		SELECT * FROM goods
+		 <where>
+             <if test="gName!=null"> and g_name like concat('%',#{gName},'%')</if>
+             <if test="1==1">and isdisplay=0</if>
+         </where>
+
+
 	</select>
 
     <select id="queryAllGoodsCond" resultType="int">
 		SELECT count(*) FROM goods
+        <where>
+            <if test="gName!=null"> and g_name like concat('%',#{gName},'%')</if>
+            <if test="1==1">and isdisplay=0</if>
+        </where>
 	</select>
+
+    <insert id="addGoods" parameterType="goods">
+        INSERT INTO `shoppingdb`.`goods` (
+  `g_name`,
+  `g_img`,
+  `g_price_into`,
+  `g_price_out`,
+  `g_describe`,
+  `g_time`,
+  `g_parent`,
+  `g_child`,
+  `g_num`
+)
+VALUES
+  (
+    #{gName},
+    #{gImg},
+    #{gPriceInto},
+    #{gPriceOut},
+    #{gDescribe},
+    now(),
+    #{gParent},
+    #{gChild},
+    0
+  ) ;
+    </insert>
+    <update id="updGoodsImg" parameterType="goods">
+UPDATE
+  `shoppingdb`.`goods`
+SET
+  `g_img` = #{gImg}
+WHERE `g_id` = #{gId} ;
+    </update>
+    <update id="delGoods" parameterType="int">
+UPDATE goods SET isdisplay=1 where g_id=#{gId}
+    </update>
+
+    <update id="updGoods" parameterType="goods">
+UPDATE
+  `shoppingdb`.`goods`
+SET
+  `g_name` = #{gName},
+  `g_price_into` = #{gPriceInto},
+  `g_price_out` = #{gPriceOut},
+  `g_describe` = #{gDescribe},
+  `g_parent` = #{gParent},
+  `g_child` = #{gChild}
+WHERE `g_id` = #{gId} ;
+    </update>
 
 </mapper>

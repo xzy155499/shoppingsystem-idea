@@ -12,7 +12,7 @@ public interface WarehouseDao {
 
     int queryWarehouseCount(Warehouse warehouse);
 
-    List<Warehouse> queryWarehouseById(int id);
+    Warehouse queryWarehouseById(int id);
 
     int addWarehouse(Warehouse warehouse);
 

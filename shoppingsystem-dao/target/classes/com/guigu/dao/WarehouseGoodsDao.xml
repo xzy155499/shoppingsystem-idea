@@ -10,19 +10,22 @@
         <result column="g_id" property="gId"></result>
         <result column="wg_num" property="wgNum"></result>
         <collection property="goods" javaType="com.guigu.vo.Goods"
-                    column="g_id" select="com.guigu.dao.GoodsChildDao.queryGoodsById" fetchType="lazy">
+                    column="g_id" select="com.guigu.dao.GoodsDao.queryGoodsById" fetchType="lazy">
         </collection>
         <collection property="warehouse" javaType="com.guigu.vo.Warehouse"
-                    column="w_id" select="com.guigu.dao.GoodsChildDao.queryWarehouseById" fetchType="lazy">
+                    column="w_id" select="com.guigu.dao.WarehouseDao.queryWarehouseById" fetchType="lazy">
         </collection>
     </resultMap>
 
     <select id="queryWarehouseGoodsById" resultMap="warehousegoodsMap">
-        select * from warehouse_goods where w_id = #{id}
+        select * from warehouse_goods where wg_id = #{id}
 	</select>
-    <select id="queryAllWarehouseGoods" resultMap="warehousegoodsMap">
-        select * from warehouse_goods
+    <select id="queryAllWarehouseGoods" resultMap="warehousegoodsMap" parameterType="WarehouseGoods">
+        select * from warehouse_goods where w_id=#{wId}
 	</select>
+    <select id="queryWarehouseGoodsCount" resultType="int"  parameterType="WarehouseGoods">
+        select count(*) from warehouse_goods where w_id=#{wId}
+    </select>
     <insert id="addWarehouseGoods">
 INSERT INTO `shoppingdb`.`warehouse_goods` (`p_name`, `p_describe`)
 VALUES
@@ -32,7 +35,7 @@ VALUES
         delete from `shoppingdb`.`warehouse_goods` where p_id=#{id}
     </delete>
 
-<update id="updWarehouseGoods">
+    <update id="updWarehouseGoods">
 UPDATE
   `shoppingdb`.`warehouse_goods`
 SET

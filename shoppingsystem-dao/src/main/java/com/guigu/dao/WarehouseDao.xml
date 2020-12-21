@@ -16,10 +16,8 @@
     </resultMap>
 
     <select id="queryWarehouseById" resultMap="WarehouseMap" parameterType="Warehouse">
-        select * from warehouse where p_id = #{id}
-
+        select * from warehouse where w_id = #{id}
 	</select>
-
     <select id="queryAllWarehouse" resultMap="WarehouseMap" parameterType="Warehouse">
         select * from warehouse
         <where>

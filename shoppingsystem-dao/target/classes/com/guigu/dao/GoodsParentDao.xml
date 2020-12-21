@@ -8,6 +8,9 @@
         <id column="p_id" property="pId"></id>
         <result column="p_name" property="pName"></result>
         <result column="p_describe" property="pDescribe"></result>
+        <collection property="goodsChildType" javaType="list"
+                    column="p_id" select="com.guigu.dao.GoodsChildDao.queryAllGoodsChildType" fetchType="lazy">
+        </collection>
     </resultMap>
 
     <select id="queryGoodsParentTypeById" resultMap="goodsparentMap">
@@ -18,7 +21,7 @@
         <where>
             <if test="pName!=null">and p_name like concat('%',#{pName},'%')</if>
         </where>
-	</select>
+    </select>
     <insert id="addGoodsParentType">
 INSERT INTO `shoppingdb`.`goods_parent_type` (`p_name`, `p_describe`)
 VALUES
@@ -28,7 +31,7 @@ VALUES
         delete from `shoppingdb`.`goods_parent_type` where p_id=#{id}
     </delete>
 
-<update id="updGoodsParentType">
+    <update id="updGoodsParentType">
 UPDATE
   `shoppingdb`.`goods_parent_type`
 SET
