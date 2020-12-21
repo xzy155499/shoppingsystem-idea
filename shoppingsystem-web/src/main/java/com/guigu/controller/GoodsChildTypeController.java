@@ -37,7 +37,6 @@ public class GoodsChildTypeController {
     @RequestMapping(value="/delGoodsChildType.action")
     @ResponseBody
     public int delGoodsChildType(int id) {
-        System.out.println(id);
         return service.delGoodsChildType(id);
     }
 
