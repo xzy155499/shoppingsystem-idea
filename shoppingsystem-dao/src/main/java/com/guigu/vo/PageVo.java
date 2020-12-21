@@ -8,6 +8,16 @@ public class PageVo<T> {
 
     private int total;
 
+    private String nums;
+
+    public String getNums() {
+        return nums;
+    }
+
+    public void setNums(String nums) {
+        this.nums = nums;
+    }
+
     public List<T> getRows() {
         return rows;
     }
@@ -23,4 +33,5 @@ public class PageVo<T> {
     public void setTotal(int total) {
         this.total = total;
     }
+
 }
