@@ -15,7 +15,21 @@
         <result column="isdelete" property="isdelete"></result>
     </resultMap>
 
-    <select id="queryMenuByPidAndNodeType" resultMap="menuMap">
+	<select id="queryMenuByCond" resultMap="menuMap">
+		SELECT * FROM menu_info
+		<where>
+			<if test="label!=null">and label like concat('%',#{label},'%')</if>
+		</where>
+	</select>
+
+	<select id="queryMenuCountByCond" resultType="int">
+		SELECT COUNT(*) FROM menu_info
+		<where>
+			<if test="label!=null">and label like concat('%',#{label},'%')</if>
+		</where>
+	</select>
+
+    <select id="queryMenuByEmpIdPidAndNodeType" resultMap="menuMap">
 		SELECT m.* FROM emprole_info er
 		INNER JOIN emp_info e
 		ON er.emp_id=e.emp_id
@@ -23,9 +37,25 @@
 		ON rm.role_id=er.role_id
 		INNER JOIN menu_info m
 		ON m.id=rm.menu_id
-		WHERE e.emp_id=#{emp_id} AND m.parentid=#{pid} AND m.nodetype=#{nodeType}
+		WHERE e.emp_id=#{emp_id} AND m.parentid=#{pid} AND m.nodetype=#{nodeType} AND m.isdelete = 0
 		ORDER BY m.id
 	</select>
 
+    <select id="queryAllMenuByPidAndNodeType" resultMap="menuMap">
+		SELECT * FROM menu_info
+		WHERE parentid=#{pid} AND nodetype=#{nodeType}
+	</select>
 
+	<select id="queryMenuIdByRid" parameterType="int" resultType="Integer">
+		SELECT m.id FROM menu_info m
+		LEFT JOIN rolemenu_info rm
+		ON m.id= rm.menu_id
+		WHERE rm.role_id =#{role_id}
+	</select>
+
+	<update id="disabledMenu">
+		UPDATE menu_info
+		SET isdelete = #{isdelete}
+		WHERE id = #{id};
+	</update>
 </mapper>
