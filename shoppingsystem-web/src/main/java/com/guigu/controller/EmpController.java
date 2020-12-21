@@ -34,6 +34,8 @@ public class EmpController {
         EmpInfo empInfo1 = empService.LoginPassExist(empInfo);
         if (empInfo1 != null) {
             List<RoleInfo> roleInfos = roleService.queryRolesByEmpId(empInfo1.getEmp_id());
+            empInfo1.setLast_time(empInfo1.getThis_time());
+            empService.updateTime(empInfo1);
             map.put("roles",roleInfos);
             map.put("code",0);
             map.put("msg","用户名或者密码错误");

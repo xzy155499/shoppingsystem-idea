@@ -8,6 +8,9 @@ public interface EmpService {
     //登录 判断 用户名 密码是否正确
     EmpInfo LoginPassExist(EmpInfo empInfo);
 
+    //修改登录时间
+    int updateTime(EmpInfo empInfo);
+
     //查询所有员工 信息 条件查询
     PageVo<EmpInfo> queryEmpByCond(EmpInfo empInfo, int page, int rows) ;
 

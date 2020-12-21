@@ -19,6 +19,11 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
+    public int updateTime(EmpInfo empInfo) {
+        return empDao.updateTime(empInfo);
+    }
+
+    @Override
     public PageVo<EmpInfo> queryEmpByCond(EmpInfo empInfo, int page, int rows) {
         PageVo<EmpInfo> pageVo = new PageVo<EmpInfo>();
         PageHelper.startPage(page,rows);

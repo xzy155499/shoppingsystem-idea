@@ -9,6 +9,15 @@
 		WHERE account=#{account} and pass=#{pass}
 	</select>
 
+    <update id="updateTime">
+        UPDATE emp_info
+        <set>
+            <if test="last_time!=null">last_time = #{last_time},</if>
+            this_time = now(),login_count = login_count+1
+        </set>
+        WHERE emp_id = #{emp_id}
+    </update>
+
     <select id="queryEmpByCond" parameterType="empInfo" resultType="empInfo">
         SELECT * FROM emp_info
         <where>
@@ -33,7 +42,7 @@
 
     <insert id="addEmp">
         INSERT INTO emp_info
-        VALUES(NULL,#{emp_name},#{photo},#{emp_age},#{emp_sex},#{id_number},#{phone},#{address},#{account},#{pass},NULL,NULL,NULL,0)
+        VALUES(NULL,#{emp_name},#{photo},#{emp_age},#{emp_sex},#{id_number},#{phone},#{address},#{account},#{pass},NULL,now(),0,0)
     </insert>
 
     <update id="updateEmpByEmpId">
@@ -46,8 +55,8 @@
             <if test="id_number!=null">id_number=#{id_number},</if>
             <if test="phone!=null">phone=#{phone},</if>
             <if test="address!=null">address=#{address},</if>
-            <if test="account!=null">account=#{account},</if>
-            <if test="pass!=null">pass=#{pass},</if>
+<!--            <if test="account!=null">account=#{account},</if>-->
+<!--            <if test="pass!=null">pass=#{pass},</if>-->
         </set>
         WHERE emp_id = #{emp_id}
     </update>

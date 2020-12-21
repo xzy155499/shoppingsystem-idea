@@ -12,6 +12,9 @@ public interface EmpDao {
     //条件查询 员工信息
     List<EmpInfo> queryEmpByCond(EmpInfo empInfo);
 
+    //修改登录时间
+    int updateTime(EmpInfo empInfo);
+
     //条件查询 员工信息数量
     int queryEmpCountByCond(EmpInfo empInfo);
 

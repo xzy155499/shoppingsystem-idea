@@ -45,7 +45,7 @@ public class GoodsController {
         String imgurl ="";
         for (int i = 0; i <img.length ; i++) {
             imgurl+="../src/assets/img/"+img[i].getOriginalFilename()+",";
-            img[i].transferTo(new File("E:\\idea\\shoppingsystem-vue1\\src\\assets\\img\\"+img[i].getOriginalFilename()));
+            img[i].transferTo(new File("E:\\ideaCode\\shoppingsystem-vue\\src\\assets\\img\\"+img[i].getOriginalFilename()));
         }
         imgurl=imgurl.substring(0,imgurl.length()-1);
         goods.setgImg(imgurl);
@@ -71,7 +71,7 @@ public class GoodsController {
             imgurl+="../src/assets/img/"+imgName[i]+",";
         }
         for (int i = 0; i <img.length ; i++) {
-            img[i].transferTo(new File("E:\\idea\\shoppingsystem-vue1\\src\\assets\\img\\"+img[i].getOriginalFilename()));
+            img[i].transferTo(new File("E:\\ideaCode\\shoppingsystem-vue\\src\\assets\\img\\"+img[i].getOriginalFilename()));
         }
         imgurl=imgurl.substring(0,imgurl.length()-1);
         goods.setgImg(imgurl);
