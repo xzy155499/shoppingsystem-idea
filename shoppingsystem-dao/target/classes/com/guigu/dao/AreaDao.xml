@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guigu.dao.AreaDao">
+    <resultMap id="queryarea" type="area">
+        <result property="name" column="areaName"></result>
+        <result property="id" column="areaId"></result>
+    </resultMap>
+    <select id="queryArea" parameterType="Area" resultMap="queryarea">
+        select * from area WHERE parentid = #{parentId}
+    </select>
+    <select id="queryAreaAll" resultMap="queryarea">
+        select * from area
+    </select>
+
+    <select id="queryAreaById" parameterType="int" resultMap="queryarea">
+        select * from area WHERE areaId=#{id}
+    </select>
+
+</mapper>
