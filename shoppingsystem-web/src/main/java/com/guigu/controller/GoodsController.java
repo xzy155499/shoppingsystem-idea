@@ -25,6 +25,15 @@ public class GoodsController {
     @Autowired
     GoodsService service;
 
+
+    @CrossOrigin
+    @RequestMapping(value="/queryGoodsById.action",produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String queryGoodsById(Integer id) {
+        System.out.println("*****************"+id);
+        return JSONObject.toJSONString(service.queryGoodsById(id));
+    }
+
     //查询出所有的菜单信息(员工登录 不同的员工有不同的菜单信息)
     @CrossOrigin
     @RequestMapping(value="/queryAllGoods.action",produces = {"application/json;charset=utf-8"})
@@ -61,7 +70,7 @@ public class GoodsController {
         String imgurl ="";
         for (int i = 0; i <img.length ; i++) {
             imgurl+="../src/assets/img/"+img[i].getOriginalFilename()+",";
-            img[i].transferTo(new File("E:\\idea\\shoppingsystem-vue1\\src\\assets\\img\\"+img[i].getOriginalFilename()));
+            img[i].transferTo(new File("E:\\ideaCode\\shoppingsystem-vue\\src\\assets\\img\\"+img[i].getOriginalFilename()));
         }
         imgurl=imgurl.substring(0,imgurl.length()-1);
         goods.setgImg(imgurl);
@@ -87,7 +96,7 @@ public class GoodsController {
             imgurl+="../src/assets/img/"+imgName[i]+",";
         }
         for (int i = 0; i <img.length ; i++) {
-            img[i].transferTo(new File("E:\\idea\\shoppingsystem-vue1\\src\\assets\\img\\"+img[i].getOriginalFilename()));
+            img[i].transferTo(new File("E:\\ideaCode\\shoppingsystem-vue\\src\\assets\\img\\"+img[i].getOriginalFilename()));
         }
         imgurl=imgurl.substring(0,imgurl.length()-1);
         goods.setgImg(imgurl);

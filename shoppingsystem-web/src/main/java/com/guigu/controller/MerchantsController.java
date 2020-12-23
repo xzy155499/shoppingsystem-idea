@@ -67,7 +67,7 @@ public class MerchantsController {
     @ResponseBody
     public int updMarehouseImg(Merchants merchants , MultipartFile img) throws IOException {
         String imgurl="../src/assets/img/"+img.getOriginalFilename();
-            img.transferTo(new File("E:\\idea\\shoppingsystem-vue1\\src\\assets\\img\\"+img.getOriginalFilename()));
+            img.transferTo(new File("E:\\ideaCode\\shoppingsystem-vue\\src\\assets\\img\\"+img.getOriginalFilename()));
         merchants.setmImg(imgurl);
         return service.updMarehouseImg(merchants);
     }
