@@ -21,6 +21,11 @@ public class GoodsServiceImpl implements GoodsService {
 
 
     @Override
+    public List<Goods> queryGoodsById(int id) {
+        return dao.queryGoodsById(id);
+    }
+
+    @Override
     public PageVo<Goods> queryAllGoods(int page ,int rows,Goods goods) {
         PageVo<Goods> pageVo = new PageVo<>();
 

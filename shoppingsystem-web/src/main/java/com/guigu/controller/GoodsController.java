@@ -1,6 +1,7 @@
 package com.guigu.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.guigu.service.GoodsService;
 import com.guigu.service.MenuService;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -26,6 +28,15 @@ import java.util.Map;
 public class GoodsController {
     @Autowired
     GoodsService service;
+
+
+    @CrossOrigin
+    @RequestMapping(value="/queryGoodsById.action",produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String queryGoodsById(Integer id) {
+        System.out.println("*****************"+id);
+        return JSONObject.toJSONString(service.queryGoodsById(id));
+    }
 
     //查询出所有的菜单信息(员工登录 不同的员工有不同的菜单信息)
     @CrossOrigin

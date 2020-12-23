@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface GoodsDao {
 
-    Goods queryGoodsById(int id);
+    List<Goods> queryGoodsById(int id);
+
     List<Goods> queryAllGoods(Goods goods);
 
     int queryAllGoodsCond(Goods goods);

@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface GoodsService {
 
+    List<Goods> queryGoodsById(int id);
+
     PageVo<Goods> queryAllGoods(int page ,int rows,Goods goods);
 
     int updGoodsImg(Goods goods);
