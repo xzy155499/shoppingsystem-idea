@@ -11,7 +11,7 @@ public interface WarehouseGoodsService {
 
     PageVo<WarehouseGoods> queryAllWarehouseGoods(int page,int rows,WarehouseGoods warehouseGoods);
 
-    int addWarehouseGoods(WarehouseGoods WarehouseGoods);
+    int addWarehouseGoods(int wid ,String ids,String nums);
 
     int delWarehouseGoods(int id);
 

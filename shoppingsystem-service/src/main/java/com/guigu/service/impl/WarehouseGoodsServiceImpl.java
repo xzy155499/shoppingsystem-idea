@@ -30,9 +30,20 @@ public class WarehouseGoodsServiceImpl implements WarehouseGoodsService {
     }
 
     @Override
-    public int addWarehouseGoods(WarehouseGoods WarehouseGoods) {
-        return dao.addWarehouseGoods(WarehouseGoods);
+    public int addWarehouseGoods(int wid, String ids, String nums) {
+        String[] id = ids.split(",");
+        String[] num = nums.split(",");
+        for (int i = 0; i <id.length ; i++) {
+            try {
+                int row = dao.queWarehouseGoodsByWid(Integer.parseInt(id[i]),Integer.parseInt(num[i]));
+                int upd =dao.updWarehouseGoodsnum(wid,Integer.parseInt(id[i]),Integer.parseInt(num[i]));
+            }catch (Exception e){
+                int add = dao.addWarehouseGoodsnum(wid,Integer.parseInt(id[i]),Integer.parseInt(num[i]));
+           }
+        }
+        return 0;
     }
+
 
     @Override
     public int delWarehouseGoods(int id) {

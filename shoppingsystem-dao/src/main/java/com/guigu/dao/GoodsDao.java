@@ -22,5 +22,8 @@ public interface GoodsDao {
 
     int updGoods(Goods goods);
 
+    List<Goods> queryAllGoods1(Goods goods);
+    int queryAllGoodsCond1(Goods goods);
+    List<Goods> queryAllGoods2(Goods goods);
 
 }

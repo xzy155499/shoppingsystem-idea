@@ -3,6 +3,7 @@ package com.guigu.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.guigu.service.WarehouseGoodsService;
+import com.guigu.vo.Warehouse;
 import com.guigu.vo.WarehouseGoods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class WarehouseGoodsController {
@@ -27,10 +30,10 @@ public class WarehouseGoodsController {
     @CrossOrigin
     @RequestMapping(value="/addWarehouseGoods.action")
     @ResponseBody
-    public int addWarehouseGoods(WarehouseGoods WarehouseGoods) {
-        return service.addWarehouseGoods(WarehouseGoods);
-    }
+    public int addWarehouseGoods(int wid ,String ids,String nums) {
 
+        return service.addWarehouseGoods(wid,ids,nums);
+    }
     @CrossOrigin
     @RequestMapping(value="/delWarehouseGoods.action")
     @ResponseBody

@@ -19,4 +19,6 @@ public interface MerchantsService {
     Merchants loginMerchants(Merchants merchants);
 
     int updMarehouseImg(Merchants merchants);
+
+    List<Merchants> queMerchantsStatistical();
 }

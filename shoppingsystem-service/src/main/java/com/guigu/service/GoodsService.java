@@ -19,4 +19,8 @@ public interface GoodsService {
     int delGoods(int id);
 
     int updGoods(Goods goods);
+
+    PageVo<Goods> queryAllGoods1(int page ,int rows,Goods goods);
+    List<Goods> queryAllGoods2(Goods goods);
+
 }

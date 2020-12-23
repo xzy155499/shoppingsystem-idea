@@ -4,10 +4,6 @@ package com.guigu.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.guigu.service.GoodsService;
-import com.guigu.service.MenuService;
-import com.guigu.vo.Goods;
-import com.guigu.vo.MenuInfo;
-import com.guigu.vo.PageVo;
 import com.guigu.vo.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +42,24 @@ public class GoodsController {
                                       @RequestParam(value = "rows", defaultValue = "5") int rows,
                                Goods goods) {
         return JSONObject.toJSONString(service.queryAllGoods(page,rows,goods));
+    }
+    @CrossOrigin
+    @RequestMapping(value="/queryAllGoods1.action",produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String queryAllGoods1(@RequestParam(value = "page", defaultValue = "1") int page,
+                               @RequestParam(value = "rows", defaultValue = "5") int rows,
+                               Goods goods) {
+        return JSONObject.toJSONString(service.queryAllGoods1(page,rows,goods));
+    }
+
+    @CrossOrigin
+    @RequestMapping(value="/queryAllGoods2.action")
+    @ResponseBody
+    public String queryAllGoods1(Goods goods) {
+        if (goods.getgImg().equals("")){
+            goods.setgImg("0");
+        }
+        return JSONObject.toJSONString(service.queryAllGoods2(goods));
     }
 
     @CrossOrigin
