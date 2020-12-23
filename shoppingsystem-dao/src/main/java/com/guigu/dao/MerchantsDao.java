@@ -22,4 +22,6 @@ public interface MerchantsDao {
     Merchants loginMerchants(Merchants merchants);
     int updMarehouseImg(Merchants merchants);
 
+    List<Merchants> queMerchantsStatistical();
+
 }

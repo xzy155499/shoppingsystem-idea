@@ -35,6 +35,7 @@ public class Goods {
 
     private String type;
 
+    private int warehouseNum;
 
     @Override
     public String toString() {
@@ -53,15 +54,9 @@ public class Goods {
                 ", gFinalPurchase=" + gFinalPurchase +
                 ", goodsChildType=" + goodsChildType +
                 ", goodsParentType=" + goodsParentType +
+                ", type='" + type + '\'' +
+                ", warehouseNum=" + warehouseNum +
                 '}';
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Integer getgId() {
@@ -176,7 +171,23 @@ public class Goods {
         this.goodsParentType = goodsParentType;
     }
 
-    public Goods(Integer gId, String gName, String gImg, Double gPriceInto, Double gPriceOut, String gDescribe, Date gTime, Integer gParent, Integer gChild, Integer gNum, Date gFinalSales, Date gFinalPurchase, GoodsChildType goodsChildType, GoodsParentType goodsParentType, String type) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getWarehouseNum() {
+        return warehouseNum;
+    }
+
+    public void setWarehouseNum(int warehouseNum) {
+        this.warehouseNum = warehouseNum;
+    }
+
+    public Goods(Integer gId, String gName, String gImg, Double gPriceInto, Double gPriceOut, String gDescribe, Date gTime, Integer gParent, Integer gChild, Integer gNum, Date gFinalSales, Date gFinalPurchase, GoodsChildType goodsChildType, GoodsParentType goodsParentType, String type, int warehouseNum) {
         this.gId = gId;
         this.gName = gName;
         this.gImg = gImg;
@@ -192,6 +203,7 @@ public class Goods {
         this.goodsChildType = goodsChildType;
         this.goodsParentType = goodsParentType;
         this.type = type;
+        this.warehouseNum = warehouseNum;
     }
 
     public Goods(){}

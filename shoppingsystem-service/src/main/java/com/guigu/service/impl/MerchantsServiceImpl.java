@@ -58,4 +58,9 @@ public class MerchantsServiceImpl implements MerchantsService {
     public int updMarehouseImg(Merchants merchants) {
         return dao.updMarehouseImg(merchants);
     }
+
+    @Override
+    public List<Merchants> queMerchantsStatistical() {
+        return dao.queMerchantsStatistical();
+    }
 }

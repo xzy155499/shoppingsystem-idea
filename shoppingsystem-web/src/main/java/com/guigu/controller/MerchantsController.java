@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -71,6 +72,10 @@ public class MerchantsController {
         return service.updMarehouseImg(merchants);
     }
 
-
-
+    @CrossOrigin
+    @RequestMapping(value="/queMerchantsStatistical.action")
+    @ResponseBody
+    public List<Merchants> queMerchantsStatistical() {
+        return service.queMerchantsStatistical();
+    }
 }

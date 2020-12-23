@@ -50,4 +50,9 @@ public class WarehouseController {
     public int updWarehouse(Warehouse warehouse) {
         return service.updWarehouse(warehouse);
     }
+
+
+
+
+
 }
