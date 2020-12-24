@@ -131,5 +131,22 @@ SET
   `g_child` = #{gChild}
 WHERE `g_id` = #{gId} ;
     </update>
+    <update id="updFinalSales" parameterType="int">
+UPDATE
+  `shoppingdb`.`goods`
+SET
+`g_final_sales`=now(),
+`g_num`=`g_num`+ #{num}
+WHERE `g_id` = #{id} ;
+    </update>
+
+    <update id="updFinalPurchase" parameterType="int">
+UPDATE
+  `shoppingdb`.`goods`
+SET
+`g_final_purchase`=now()
+WHERE `g_id` = #{id} ;
+    </update>
+
 
 </mapper>

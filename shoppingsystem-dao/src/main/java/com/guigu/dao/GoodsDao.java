@@ -26,4 +26,8 @@ public interface GoodsDao {
     int queryAllGoodsCond1(Goods goods);
     List<Goods> queryAllGoods2(Goods goods);
 
+    int updFinalSales(@Param("id")int id,@Param("num")int num);
+
+    int updFinalPurchase(int id);
+
 }

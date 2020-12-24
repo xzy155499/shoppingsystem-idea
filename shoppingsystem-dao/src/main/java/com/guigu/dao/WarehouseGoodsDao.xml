@@ -16,9 +16,16 @@
                     column="w_id" select="com.guigu.dao.WarehouseDao.queryWarehouseById" fetchType="lazy">
         </collection>
     </resultMap>
+    <resultMap id="warehousegoodsMap1" type="warehousegoods">
+        <id column="wg_id" property="wgId"></id>
+        <result column="w_id" property="wId"></result>
+        <result column="g_id" property="gId"></result>
+        <result column="wg_num" property="wgNum"></result>
+    </resultMap>
 
-    <select id="queryWarehouseGoodsById" resultMap="warehousegoodsMap">
-        select * from warehouse_goods where wg_id = #{id}
+
+    <select id="queryWarehouseGoodsById" resultMap="warehousegoodsMap1">
+        select * from warehouse_goods where w_id = #{id}
 	</select>
     <select id="queryAllWarehouseGoods" resultMap="warehousegoodsMap" parameterType="WarehouseGoods">
         select * from warehouse_goods where w_id=#{wId}

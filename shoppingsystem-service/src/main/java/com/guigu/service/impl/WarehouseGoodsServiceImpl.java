@@ -1,6 +1,7 @@
 package com.guigu.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.guigu.dao.GoodsDao;
 import com.guigu.dao.WarehouseGoodsDao;
 import com.guigu.service.WarehouseGoodsService;
 import com.guigu.vo.PageVo;
@@ -15,6 +16,8 @@ import java.util.List;
 public class WarehouseGoodsServiceImpl implements WarehouseGoodsService {
     @Autowired
     WarehouseGoodsDao dao;
+    @Autowired
+    GoodsDao gdao;
 
     @Override
     public PageVo<WarehouseGoods> queryAllWarehouseGoods(int page ,int rows,WarehouseGoods warehouseGoods) {
@@ -34,6 +37,7 @@ public class WarehouseGoodsServiceImpl implements WarehouseGoodsService {
         String[] id = ids.split(",");
         String[] num = nums.split(",");
         for (int i = 0; i <id.length ; i++) {
+            gdao.updFinalPurchase(Integer.parseInt(id[i]));
             try {
                 int row = dao.queWarehouseGoodsByWid(Integer.parseInt(id[i]),Integer.parseInt(num[i]));
                 int upd =dao.updWarehouseGoodsnum(wid,Integer.parseInt(id[i]),Integer.parseInt(num[i]));

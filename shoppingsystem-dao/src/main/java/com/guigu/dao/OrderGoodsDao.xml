@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guigu.dao.OrderGoodsDao">
+    <resultMap id="OrderGoodsMap" type="OrderGoods">
+        <result property="orderId" column="order_id"></result>
+        <result property="goodsId" column="goods_id"></result>
+        <collection property="goods" javaType="com.guigu.vo.Goods"
+                    column="goods_id" select="com.guigu.dao.GoodsDao.queryGoodsById" fetchType="lazy">
+        </collection>
+
+    </resultMap>
+    <select id="queOrderGoodsByOid" resultMap="OrderGoodsMap" parameterType="int">
+            SELECT * FROM order_goods where  order_id =#{order_id}
+    </select>
+
+</mapper>

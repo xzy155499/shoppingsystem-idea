@@ -27,4 +27,6 @@ public interface EmpDao {
     //修改员工信息
     int updateEmpByEmpId(EmpInfo empInfo);
 
+    EmpInfo queEmpByIdId(int id);
+
 }
