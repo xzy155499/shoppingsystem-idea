@@ -9,6 +9,11 @@
 		WHERE account=#{account} and pass=#{pass}
 	</select>
 
+    <select id="queEmpByIdId" parameterType="int" resultType="empInfo">
+		SELECT * FROM emp_info
+		WHERE emp_id=#{id}
+	</select>
+
     <update id="updateTime">
         UPDATE emp_info
         <set>

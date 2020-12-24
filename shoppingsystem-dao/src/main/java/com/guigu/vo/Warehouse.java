@@ -1,5 +1,7 @@
 package com.guigu.vo;
 
+import java.util.List;
+
 public class Warehouse {
     private Integer wId;
 
@@ -19,6 +21,8 @@ public class Warehouse {
 
     private String detailedAddress;
 
+    private List<WarehouseGoods> list;
+
     @Override
     public String toString() {
         return "Warehouse{" +
@@ -31,6 +35,7 @@ public class Warehouse {
                 ", wCounty='" + wCounty + '\'' +
                 ", wDetailed='" + wDetailed + '\'' +
                 ", detailedAddress='" + detailedAddress + '\'' +
+                ", list=" + list +
                 '}';
     }
 
@@ -106,7 +111,15 @@ public class Warehouse {
         this.detailedAddress = detailedAddress;
     }
 
-    public Warehouse(Integer wId, String wName, String wCoordinates, String wNote, String wProvince, String wCity, String wCounty, String wDetailed, String detailedAddress) {
+    public List<WarehouseGoods> getList() {
+        return list;
+    }
+
+    public void setList(List<WarehouseGoods> list) {
+        this.list = list;
+    }
+
+    public Warehouse(Integer wId, String wName, String wCoordinates, String wNote, String wProvince, String wCity, String wCounty, String wDetailed, String detailedAddress, List<WarehouseGoods> list) {
         this.wId = wId;
         this.wName = wName;
         this.wCoordinates = wCoordinates;
@@ -116,6 +129,8 @@ public class Warehouse {
         this.wCounty = wCounty;
         this.wDetailed = wDetailed;
         this.detailedAddress = detailedAddress;
+        this.list = list;
     }
+
     public Warehouse(){}
 }

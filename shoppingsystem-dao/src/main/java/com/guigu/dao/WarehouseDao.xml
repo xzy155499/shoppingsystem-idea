@@ -13,6 +13,9 @@
         <result column="w_city" property="wCity"></result>
         <result column="w_county" property="wCounty"></result>
         <result column="w_detailed" property="wDetailed"></result>
+        <collection property="list" javaType="list"
+                    column="w_id" select="com.guigu.dao.WarehouseGoodsDao.queryWarehouseGoodsById" fetchType="lazy">
+        </collection>
     </resultMap>
 
     <select id="queryWarehouseById" resultMap="WarehouseMap" parameterType="Warehouse">
