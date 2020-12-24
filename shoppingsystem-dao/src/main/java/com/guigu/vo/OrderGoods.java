@@ -10,6 +10,8 @@ public class OrderGoods {
     private Double sum;
 
     private Goods goods;
+    private int priceInto;
+    private int priceOut;
 
     @Override
     public String toString() {
@@ -19,6 +21,8 @@ public class OrderGoods {
                 ", num=" + num +
                 ", sum=" + sum +
                 ", goods=" + goods +
+                ", priceInto=" + priceInto +
+                ", priceOut=" + priceOut +
                 '}';
     }
 
@@ -62,12 +66,31 @@ public class OrderGoods {
         this.goods = goods;
     }
 
-    public OrderGoods(Integer orderId, Integer goodsId, Integer num, Double sum, Goods goods) {
+    public int getPriceInto() {
+        return priceInto;
+    }
+
+    public void setPriceInto(int priceInto) {
+        this.priceInto = priceInto;
+    }
+
+    public int getPriceOut() {
+        return priceOut;
+    }
+
+    public void setPriceOut(int priceOut) {
+        this.priceOut = priceOut;
+    }
+
+    public OrderGoods(Integer orderId, Integer goodsId, Integer num, Double sum, Goods goods, int priceInto, int priceOut) {
         this.orderId = orderId;
         this.goodsId = goodsId;
         this.num = num;
         this.sum = sum;
         this.goods = goods;
+        this.priceInto = priceInto;
+        this.priceOut = priceOut;
     }
+
     public OrderGoods(){}
 }

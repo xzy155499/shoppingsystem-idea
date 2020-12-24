@@ -2,6 +2,7 @@ package com.guigu.service;
 
 import com.guigu.vo.Goods;
 import com.guigu.vo.Merchants;
+import com.guigu.vo.OrderInfo;
 import com.guigu.vo.PageVo;
 
 import java.util.List;
@@ -21,4 +22,14 @@ public interface MerchantsService {
     int updMarehouseImg(Merchants merchants);
 
     List<Merchants> queMerchantsStatistical();
+
+    PageVo<OrderInfo> queMerchantsOrder(int page, int rows, OrderInfo orderInfo);
+
+    int updDeliveryByOid(OrderInfo orderInfo);
+//    PageVo<OrderInfo> queMerchantsDelivery(int page, int rows,int id);
+//    PageVo<OrderInfo> queMerchantsReceipt(int page, int rows,int id);
+//    PageVo<OrderInfo> queMerchantsPick(int page, int rows,int id);
+    List<Merchants> queMerchantsMonthByMid(int mid);
+
+    List<Merchants> queMerchantsYearByMid(int mid);
 }

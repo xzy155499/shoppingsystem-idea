@@ -30,9 +30,6 @@
 <!--        </collection>-->
 
     </resultMap>
-
-
-
     <select id="queryGoodsById" resultMap="goodsMap">
 		SELECT * FROM goods where g_id =#{id}
 	</select>
@@ -42,8 +39,6 @@
              <if test="gName!=null"> and g_name like concat('%',#{gName},'%')</if>
              <if test="1==1">and isdisplay=0</if>
          </where>
-
-
 	</select>
 
     <select id="queryAllGoodsCond" resultType="int">
@@ -81,6 +76,7 @@
 
         </where>
     </select>
+
 
 
     <insert id="addGoods" parameterType="goods">

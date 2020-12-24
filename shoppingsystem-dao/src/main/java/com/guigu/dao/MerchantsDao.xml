@@ -23,6 +23,31 @@
         <result column="m_pwd" property="mPwd"></result>
         <result column="m_phone" property="mPhone"></result>
     </resultMap>
+    <resultMap id="OrderInfoMap" type="OrderInfo">
+        <id column="order_id" property="orderId"></id>
+        <result column="user_id" property="userId" ></result>
+        <result column="merchant_id" property="merchantId" ></result>
+        <result column="emp_id" property="empId" ></result>
+        <result column="order_time" property="orderTime" ></result>
+        <result column="delivery_time" property="deliveryTime" ></result>
+        <result column="receipt_time" property="receiptTime" ></result>
+        <result column="pick_time" property="pickTime" ></result>
+        <result column="order_state" property="orderState" ></result>
+        <collection property="empInfo" javaType="com.guigu.vo.EmpInfo"
+                    column="emp_id" select="com.guigu.dao.EmpDao.queEmpByIdId" fetchType="lazy">
+        </collection>
+        <collection property="userInfo" javaType="com.guigu.vo.UserInfo"
+                    column="user_id" select="com.guigu.dao.UserDao.queryByIdUser" fetchType="lazy">
+        </collection>
+        <collection property="merchants" javaType="com.guigu.vo.Merchants"
+                    column="merchant_id" select="com.guigu.dao.MerchantsDao.queryMerchantsById" fetchType="lazy">
+        </collection>
+        <collection property="list" javaType="list"
+                    column="order_id" select="com.guigu.dao.OrderGoodsDao.queOrderGoodsByOid" fetchType="lazy">
+        </collection>
+    </resultMap>
+
+
 
     <select id="queryMerchantsById" resultMap="MerchantsMap" parameterType="int">
         select * from merchants where m_id = #{id}
@@ -48,6 +73,59 @@
             resultMap="MerchantsMap">
     SELECT COUNT(*) m_id,m_province FROM merchants GROUP BY m_province ORDER BY m_id DESC
 	</select>
+
+
+
+    <select id="queMerchantsOrder" resultMap="OrderInfoMap" parameterType="OrderInfo">
+        SELECT o.* FROM order_info  o
+        INNER JOIN merchants m ON o.`merchant_id`=m.m_id
+        INNER JOIN emp_info e ON e.`emp_id`=o.`emp_id`
+        INNER JOIN user_info u ON u. user_id=o.`user_id`
+        where o.merchant_id =#{merchantId} and o.order_state=#{orderState}
+        and m.`m_stores_name` like concat('%',#{merchants.mStoresName},'%')
+        and u.`user_name` like concat('%',#{userInfo.user_name},'%')
+    </select>
+    <select id="queMerchantsOrderCount" resultType="int" parameterType="OrderInfo">
+        SELECT count(*) FROM order_info  o
+        INNER JOIN merchants m ON o.`merchant_id`=m.m_id
+        INNER JOIN emp_info e ON e.`emp_id`=o.`emp_id`
+        INNER JOIN user_info u ON u. user_id=o.`user_id`
+        where o.merchant_id =#{merchantId} and o.order_state=#{orderState}
+        and m.`m_stores_name` like concat('%',#{merchants.mStoresName},'%')
+        and u.`user_name` like concat('%',#{userInfo.user_name},'%')
+    </select>
+    <select id="queMerchantsMonthByMid" resultType="int">
+        SELECT SUM(SUM) mId FROM order_info WHERE order_time &gt; DATE_SUB(DATE_ADD(DATE_ADD(CURDATE(),INTERVAL -DAY(CURDATE())+1 DAY), INTERVAL ${month}-1 MONTH), INTERVAL 1 WEEK)
+        AND order_time &lt;= DATE_SUB(DATE_ADD(DATE_ADD(CURDATE(),INTERVAL -DAY(CURDATE())+1 DAY), INTERVAL #{month} MONTH), INTERVAL 1 WEEK) and merchant_id =#{mid}
+    </select>
+   <select id="queMerchantsYearByMid" resultType="int">
+       SELECT SUM(SUM) FROM order_info WHERE order_time&lt;=DATE_ADD(DATE_SUB( CURDATE( ), INTERVAL DAYOFYEAR( NOW( ) ) - 1 DAY ),INTERVAL ${year} YEAR)
+       AND order_time&gt;DATE_ADD(DATE_SUB( CURDATE( ), INTERVAL DAYOFYEAR( NOW( ) ) - 1 DAY ),INTERVAL ${year}-1 YEAR) and merchant_id =#{mid}
+   </select>
+
+<!--    <select id="queMerchantsDelivery" resultMap="OrderInfoMap" parameterType="int">-->
+<!--        SELECT * FROM order_info where merchant_id =#{id};-->
+<!--    </select>-->
+<!--    <select id="queMerchantsDeliveryCount" resultType="int">-->
+<!--        SELECT count(*) FROM order_info where merchant_id =#{id};-->
+<!--    </select>-->
+
+<!--    <select id="queMerchantsReceipt" resultMap="OrderInfoMap" parameterType="int">-->
+<!--        SELECT * FROM order_info where merchant_id =#{id};-->
+<!--    </select>-->
+<!--    <select id="queMerchantsReceiptCount" resultType="int">-->
+<!--        SELECT count(*) FROM order_info where merchant_id =#{id};-->
+<!--    </select>-->
+
+<!--    <select id="queMerchantsPick" resultMap="OrderInfoMap" parameterType="int">-->
+<!--        SELECT * FROM order_info where merchant_id =#{id};-->
+<!--    </select>-->
+<!--    <select id="queMerchantsPickCount" resultType="int">-->
+<!--        SELECT count(*) FROM order_info where merchant_id =#{id};-->
+<!--    </select>-->
+
+
+
 
     <insert id="addMerchants">
 INSERT INTO `shoppingdb`.`merchants` (
@@ -102,6 +180,15 @@ SET
   `m_img` = #{mImg}
 WHERE `m_id` = #{mId} ;
     </update>
+    <update id="updDeliveryByOid" parameterType="OrderInfo">
+        UPDATE
+  `shoppingdb`.`order_info`
+SET
+  `receipt_time` = now(),
+  order_state ='待提货'
+WHERE `order_id` = #{orderId} ;
+    </update>
+
 
 
 </mapper>

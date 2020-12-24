@@ -4,8 +4,7 @@ package com.guigu.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.guigu.service.MerchantsService;
 import com.guigu.service.GoodsService;
-import com.guigu.vo.PageVo;
-import com.guigu.vo.Merchants;
+import com.guigu.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -77,5 +76,39 @@ public class MerchantsController {
     @ResponseBody
     public List<Merchants> queMerchantsStatistical() {
         return service.queMerchantsStatistical();
+    }
+
+    @CrossOrigin
+    @RequestMapping(value="/queMerchantsOrder.action",produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String queMerchantsOrder(@RequestParam(value = "page", defaultValue = "1") int page,
+                               @RequestParam(value = "rows", defaultValue = "5") int rows,
+                               OrderInfo orderInfo,String mStoresName, String uName) {
+        Merchants m = new Merchants();
+        m.setmStoresName(mStoresName);
+        UserInfo u = new UserInfo();
+        u.setUser_name(uName);
+        orderInfo.setMerchants(m);
+        orderInfo.setUserInfo(u);
+        return JSONObject.toJSONString(service.queMerchantsOrder(page,rows,orderInfo));
+    }
+    @CrossOrigin
+    @RequestMapping(value="/updDeliveryByOid.action")
+    @ResponseBody
+    public int updDeliveryByOid(OrderInfo orderInfo) {
+        System.out.println(orderInfo);
+        return service.updDeliveryByOid(orderInfo);
+    }
+    @CrossOrigin
+    @RequestMapping(value="/queMerchantsMonthByMid.action")
+    @ResponseBody
+    public List<Merchants> queMerchantsMonthByMid(@RequestParam(value = "mid", defaultValue = "1")int mid) {
+        return service.queMerchantsMonthByMid(mid);
+    }
+    @CrossOrigin
+    @RequestMapping(value="/queMerchantsYearByMid.action")
+    @ResponseBody
+    public List<Merchants> queMerchantsYearByMid(@RequestParam(value = "mid", defaultValue = "1")int mid) {
+        return service.queMerchantsYearByMid(mid);
     }
 }
