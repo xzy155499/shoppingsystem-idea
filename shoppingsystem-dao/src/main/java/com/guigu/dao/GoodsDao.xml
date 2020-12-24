@@ -25,49 +25,49 @@
         <collection property="goodsParentType" javaType="com.guigu.vo.GoodsParentType"
                     column="g_parent" select="com.guigu.dao.GoodsParentDao.queryGoodsParentTypeById" fetchType="lazy">
         </collection>
-<!--        <collection property="warehouseNum" javaType="int"-->
-<!--                    column="g_id" select="com.guigu.dao.WarehouseGoodsDao.queWarehouseNumByGid" fetchType="lazy">-->
-<!--        </collection>-->
+        <!--        <collection property="warehouseNum" javaType="int"-->
+        <!--                    column="g_id" select="com.guigu.dao.WarehouseGoodsDao.queWarehouseNumByGid" fetchType="lazy">-->
+        <!--        </collection>-->
 
     </resultMap>
-
-
 
     <select id="queryGoodsById" resultMap="goodsMap">
 		SELECT * FROM goods where g_id =#{id}
 	</select>
+    <!-- 条件查询分页 显示所有商品 -->
     <select id="queryAllGoods" resultMap="goodsMap" parameterType="goods">
-		SELECT * FROM goods
-		 <where>
-             <if test="gName!=null"> and g_name like concat('%',#{gName},'%')</if>
-             <if test="1==1">and isdisplay=0</if>
-         </where>
-
-
-	</select>
-
-    <select id="queryAllGoodsCond" resultType="int">
-		SELECT count(*) FROM goods
+        SELECT * FROM goods
         <where>
-            <if test="gName!=null"> and g_name like concat('%',#{gName},'%')</if>
+            <if test="gName!=null">and g_name like concat('%',#{gName},'%')</if>
+            <if test="gParent!=null">and g_parent like concat('%',#{gParent},'%')</if>
             <if test="1==1">and isdisplay=0</if>
         </where>
-	</select>
+    </select>
+
+    <select id="queryAllGoodsCond" resultType="int">
+        SELECT count(*) FROM goods
+        <where>
+            <if test="gName!=null">and g_name like concat('%',#{gName},'%')</if>
+            <if test="gParent!=null">and g_parent like concat('%',#{gParent},'%')</if>
+            <if test="1==1">and isdisplay=0</if>
+        </where>
+    </select>
 
     <select id="queryAllGoods1" resultMap="goodsMap" parameterType="goods">
         SELECT * FROM goods
         <where>
-            <if test="gName!=null"> and g_name like concat('%',#{gName},'%')</if>
-            <if test="1==1">and isdisplay=0 </if>
+            <if test="gName!=null">and g_name like concat('%',#{gName},'%')</if>
+            <if test="1==1">and isdisplay=0</if>
             <if test="gImg!=''">and g_id not in(${gImg})</if>
 
         </where>
     </select>
+
     <select id="queryAllGoodsCond1" resultType="int">
         SELECT count(*) FROM goods
         <where>
-            <if test="gName!=null"> and g_name like concat('%',#{gName},'%')</if>
-            <if test="1==1">and isdisplay=0 </if>
+            <if test="gName!=null">and g_name like concat('%',#{gName},'%')</if>
+            <if test="1==1">and isdisplay=0</if>
             <if test="gImg!=''">and g_id not in(${gImg})</if>
         </where>
     </select>
@@ -75,8 +75,8 @@
     <select id="queryAllGoods2" resultMap="goodsMap" parameterType="goods">
         SELECT * FROM goods
         <where>
-            <if test="gName!=null"> and g_name like concat('%',#{gName},'%')</if>
-            <if test="1==1">and isdisplay=0 </if>
+            <if test="gName!=null">and g_name like concat('%',#{gName},'%')</if>
+            <if test="1==1">and isdisplay=0</if>
             <if test="gImg!=''">and g_id in(${gImg})</if>
 
         </where>

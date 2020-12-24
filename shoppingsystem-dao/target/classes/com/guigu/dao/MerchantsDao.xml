@@ -44,6 +44,10 @@
         select * from merchants where m_username=#{mUsername} AND m_pwd =#{mPwd}
     </select>
 
+    <select id="queMerchantsStatistical"
+            resultMap="MerchantsMap">
+    SELECT COUNT(*) m_id,m_province FROM merchants GROUP BY m_province ORDER BY m_id DESC
+	</select>
 
     <insert id="addMerchants">
 INSERT INTO `shoppingdb`.`merchants` (

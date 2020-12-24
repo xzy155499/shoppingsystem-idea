@@ -26,6 +26,12 @@
     <select id="queryWarehouseGoodsCount" resultType="int"  parameterType="WarehouseGoods">
         select count(*) from warehouse_goods where w_id=#{wId}
     </select>
+    <select id="queWarehouseNumByGid" resultType="int"  parameterType="int">
+        SELECT SUM(wg_num) FROM warehouse_goods WHERE g_id =#{id}
+    </select>
+    <select id="queWarehouseGoodsByWid">
+        select count(*) from warehouse_goods where w_id=#{wId} and g_id=#{gId}
+    </select>
     <insert id="addWarehouseGoods">
 INSERT INTO `shoppingdb`.`warehouse_goods` (`p_name`, `p_describe`)
 VALUES
@@ -44,4 +50,17 @@ SET
 WHERE `p_id` = #{pId} ;
 
 </update>
+    <insert id="addWarehouseGoodsnum">
+            INSERT INTO `shoppingdb`.`warehouse_goods` ( `w_id`, `g_id`, `wg_num`)
+    VALUES
+    ( #{wid}, #{gid}, #{num}) ;
+    </insert>
+<update id="updWarehouseGoodsnum">
+    UPDATE
+  `shoppingdb`.`warehouse_goods`
+SET
+  `wg_num` =`wg_num`+ #{num}
+WHERE `w_id` = #{wid} and g_id=#{gid} ;
+</update>
+
 </mapper>
