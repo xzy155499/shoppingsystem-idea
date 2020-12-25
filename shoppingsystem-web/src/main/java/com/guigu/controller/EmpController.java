@@ -11,13 +11,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin
 @Controller
 public class EmpController {
     @Autowired
@@ -32,19 +34,21 @@ public class EmpController {
     public Map login(EmpInfo empInfo, HttpSession session) {
         Map<String, Object> map = new HashMap<String, Object>();
         EmpInfo empInfo1 = empService.LoginPassExist(empInfo);
-         if (empInfo1 != null) {
+        if (empInfo1 != null) {
             List<RoleInfo> roleInfos = roleService.queryRolesByEmpId(empInfo1.getEmp_id());
             empInfo1.setLast_time(empInfo1.getThis_time());
             empService.updateTime(empInfo1);
-            map.put("roles",roleInfos);
-            map.put("code",0);
-            map.put("msg","登录成功");
-        } else if(empInfo1.getIsdelete() == 1){
-             map.put("code",2);
-             map.put("msg","你已离职或解雇,无法登录系统");
-         }else{
-            map.put("code","1");
-            map.put("msg","用户名或者密码错误");
+            map.put("roles", roleInfos);
+            map.put("code", 0);
+            map.put("msg", "登录成功");
+        }
+//        else if(empInfo1.getIsdelete() == 1){
+//            map.put("code",2);
+//            map.put("msg","你已离职或解雇,无法登录系统");
+//        }
+        else {
+            map.put("code", "1");
+            map.put("msg", "用户名或者密码错误");
         }
         map.put("emp", empInfo1);
         return map;
@@ -72,7 +76,11 @@ public class EmpController {
     @RequestMapping("addEmp.action")
     @ResponseBody
     @CrossOrigin
-    public int addEmp(EmpInfo empInfo) {
+    public int addEmp(EmpInfo empInfo, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        String imgurl = "";
+        imgurl += "../src/assets/img/" + file.getOriginalFilename();
+        file.transferTo(new File("E:\\ideaCode\\shoppingsystem-vue\\src\\assets\\img\\" + file.getOriginalFilename()));
+        empInfo.setPhoto(imgurl);
         return empService.addEmp(empInfo);
     }
 
@@ -80,7 +88,11 @@ public class EmpController {
     @RequestMapping("updateEmpByEmpId.action")
     @ResponseBody
     @CrossOrigin
-    public int updateEmpByEmpId(EmpInfo empInfo) {
+    public int updateEmpByEmpId(EmpInfo empInfo, @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
+        String imgurl = "";
+        imgurl += "../src/assets/img/" + file.getOriginalFilename();
+        file.transferTo(new File("E:\\ideaCode\\shoppingsystem-vue\\src\\assets\\img\\" + file.getOriginalFilename()));
+        empInfo.setPhoto(imgurl);
         return empService.updateEmpByEmpId(empInfo);
     }
 }

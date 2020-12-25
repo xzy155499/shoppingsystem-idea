@@ -30,7 +30,6 @@ public class GoodsController {
     @RequestMapping(value="/queryGoodsById.action",produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public String queryGoodsById(Integer id) {
-        System.out.println("*****************"+id);
         return JSONObject.toJSONString(service.queryGoodsById(id));
     }
 
