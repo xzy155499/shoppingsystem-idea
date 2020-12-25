@@ -30,7 +30,6 @@ public class GoodsController {
     @RequestMapping(value="/queryGoodsById.action",produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public String queryGoodsById(Integer id) {
-        System.out.println("*****************"+id);
         return JSONObject.toJSONString(service.queryGoodsById(id));
     }
 
@@ -41,7 +40,6 @@ public class GoodsController {
     public String queryAllMenu(@RequestParam(value = "page", defaultValue = "1") int page,
                                       @RequestParam(value = "rows", defaultValue = "5") int rows,
                                Goods goods) {
-        System.out.println(service.queryAllGoods(page,rows,goods).getRows()+"****************************************");
         return JSONObject.toJSONString(service.queryAllGoods(page,rows,goods));
     }
     @CrossOrigin

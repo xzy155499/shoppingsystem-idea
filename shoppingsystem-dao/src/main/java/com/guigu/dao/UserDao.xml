@@ -5,7 +5,7 @@
 <mapper namespace="com.guigu.dao.UserDao">
     <select id="userLogin" parameterType="userinfo" resultType="int">
         SELECT count(*) FROM user_info
-        where account = #{account} and pass = #{pass}
+        where phone = #{phone} and pass = #{pass}
     </select>
     <select id="queryAllUser" parameterType="userinfo" resultType="userinfo">
         SELECT * FROM user_info
