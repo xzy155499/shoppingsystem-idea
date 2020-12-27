@@ -2,20 +2,13 @@ package com.guigu.service.impl;
 
 import com.github.pagehelper.PageHelper;
 
-import com.guigu.dao.GoodsDao;
-import com.guigu.dao.OrderInfoDao;
-import com.guigu.dao.WarehouseDao;
-import com.guigu.dao.WarehouseGoodsDao;
+import com.guigu.dao.*;
 import com.guigu.service.OrderInfoService;
-import com.guigu.vo.Goods;
-import com.guigu.vo.OrderInfo;
-import com.guigu.vo.PageVo;
-import com.guigu.vo.Warehouse;
+import com.guigu.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderInfoServiceImpl implements OrderInfoService {
@@ -27,6 +20,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     WarehouseGoodsDao wgdao;
     @Autowired
     GoodsDao gdao;
+    @Autowired
+    UserDao udao;
 
     @Override
     public List<OrderInfo> queryOrderInfoById(int id) {
@@ -71,7 +66,6 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         //订单状态
         dao.updOrderInfoInto(id);
         //仓库数量
-
         String[] str = ids.split(",");
         List<Warehouse> list = new ArrayList<>();
         for (int i = 0; i < str.length; i++) {
@@ -81,7 +75,6 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             for (int j = 0; j < list.size(); j++) {
                 for (int k = 0; k <list.get(j).getList().size() ; k++) {
                     if (o.getList().get(i).getGoodsId()==list.get(j).getList().get(k).getgId()){
-                        //System.out.println(list.get(j).getList().get(k));
                         //订单的数量和仓库的数量比较
                         if(o.getList().get(i).getNum()>list.get(j).getList().get(k).getWgNum()){
                             int num = o.getList().get(i).getNum()-list.get(j).getList().get(k).getWgNum();
@@ -91,14 +84,107 @@ public class OrderInfoServiceImpl implements OrderInfoService {
                             wgdao.updWarehouseGoodsnum(list.get(j).getList().get(k).getwId(),o.getList().get(i).getGoodsId(),-o.getList().get(k).getNum());
                             o.getList().get(i).setNum(0);
                         }
-
                         break;
                     }
                 }
             }
         }
-
-
         return 0;
+    }
+
+    @Override
+    public List<Goods> queryAllOrderInfoGoods() {
+
+        List<Goods> goodsList = gdao.queryAllGoods(null);
+        for (Goods g:goodsList){
+            //日销量
+            g.setgParent(0);
+            //周销量
+            g.setgChild(0);
+            //月销量
+            g.setWarehouseNum(0);
+        }
+        for (Goods g:goodsList){
+            //日销量
+            List<OrderInfo> list=dao.queryAllOrderInfoGoodsDay(g.getgId());
+            for (OrderInfo o:list){
+                for(OrderGoods og :o.getList()) {
+                    if (g.getgId() == og.getGoodsId())
+                        g.setgParent(g.getgParent() + og.getNum());
+                }
+            }
+            List<OrderInfo> list1=dao.queryAllOrderInfoGoodsWeeks(g.getgId());
+            for (OrderInfo o:list1){
+                for(OrderGoods og :o.getList()) {
+                    if (g.getgId() == og.getGoodsId())
+                        g.setgChild(g.getgChild() + og.getNum());
+                }
+            }
+            List<OrderInfo> list2=dao.queryAllOrderInfoGoodsMonth(g.getgId());
+            for (OrderInfo o:list2){
+                for(OrderGoods og :o.getList()) {
+                    if (g.getgId() == og.getGoodsId())
+                        g.setWarehouseNum(g.getWarehouseNum() + og.getNum());
+                }
+            }
+        }
+        Collections.sort(goodsList);
+        return goodsList;
+    }
+
+    @Override
+    public Map<String, Object> queHomeData() {
+        Map<String, Object> map = new HashMap<>();
+        int orderNumDay=dao.queryAllOrderInfoDay();
+        int orderNumMonty =dao.queryAllOrderInfoMonth();
+
+        int userNumDay=udao.queryUserDay();
+        int userNumMonty=udao.queryUserMonth();
+
+        List<OrderInfo> list = dao.queryAllOrderInfoGoodsDayProfits();
+        int orderInfoGoodsDayProfits =0;
+        for (OrderInfo o :list){
+            for (OrderGoods og :o.getList()){
+                orderInfoGoodsDayProfits+=(og.getPriceOut()-og.getPriceInto())*og.getNum();
+            }
+        }
+
+        List<OrderInfo> list1 = dao.queryAllOrderInfoGoodsMontyProfits();
+        int orderInfoGoodsMontyProfits =0;
+        for (OrderInfo o :list1){
+            for (OrderGoods og :o.getList()){
+                orderInfoGoodsMontyProfits+=(og.getPriceOut()-og.getPriceInto())*og.getNum();
+            }
+        }
+        map.put("orderNumDay",orderNumDay);
+        map.put("orderInfoGoodsDayProfits",orderInfoGoodsDayProfits*0.95);
+        map.put("userNumDay",userNumDay);
+        map.put("orderNumMonty",orderNumMonty);
+        map.put("orderInfoGoodsMontyProfits",orderInfoGoodsMontyProfits*0.95);
+        map.put("userNumMonty",userNumMonty);
+        return map;
+    }
+
+    @Override
+    public List<UserInfo> queOrderByUid() {
+        List<UserInfo> list = udao.queryAllUser(null);
+        for(UserInfo u:list){
+            double num=0;
+            List<OrderInfo> olist = dao.queOrderByUid(u.getUser_id());
+            for(OrderInfo o :olist){
+                num+=o.getSum();
+            }
+            u.setPass(num+"");
+        }
+        for (int i = 0; i <list.size() ; i++) {
+            for (int j = 0; j <list.size() ; j++) {
+                if (Double.parseDouble(list.get(i).getPass())>Double.parseDouble(list.get(j).getPass())){
+                    UserInfo a = list.get(i);
+                    list.set(i,list.get(j));
+                    list.set(j,a);
+                }
+            }
+        }
+        return list;
     }
 }

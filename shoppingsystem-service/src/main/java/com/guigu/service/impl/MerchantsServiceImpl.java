@@ -1,5 +1,6 @@
 package com.guigu.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.guigu.dao.MerchantsDao;
 import com.guigu.service.MerchantsService;
@@ -131,5 +132,31 @@ public class MerchantsServiceImpl implements MerchantsService {
             list.add(m);
         }
         return list;
+    }
+
+    @Override
+    public PageVo<Merchants> AllowMerchantsEnter(Merchants merchants,int page,int rows) {
+        PageVo<Merchants> pageVo = new PageVo<>();
+        //在需要分页的代码调用前 执行以下代码
+        PageHelper.startPage(page, rows);
+        //获取分页后 显示的数据集合
+        List<Merchants> list = dao.AllowMerchantsEnter(merchants);
+        for (Merchants m :list){
+            if (m.getmCity().equals(m.getmProvince())){
+                m.setmDetailed(m.getmProvince()+"-"+m.getmCounty());
+            }else{
+                m.setmDetailed(m.getmProvince()+"-"+m.getmCity()+"-"+m.getmCounty());
+            }
+        }
+        //获取分页后 显示的数据集合
+        pageVo.setRows(list);
+        //获取总的记录数量
+        pageVo.setTotal(dao.AllowMerchantsEnterCount(merchants));
+        return pageVo;
+    }
+
+    @Override
+    public int AgreeMerchants(int id) {
+        return dao.AgreeMerchants(id);
     }
 }

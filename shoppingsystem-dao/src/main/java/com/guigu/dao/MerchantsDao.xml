@@ -56,6 +56,7 @@
         select * from merchants
         <where>
             <if test="mName!=null">and m_name like concat('%',#{mName},'%')</if>
+            <if test="1==1">and m_state ='营业'</if>
         </where>
 	</select>
 
@@ -99,9 +100,17 @@
         AND order_time &lt;= DATE_SUB(DATE_ADD(DATE_ADD(CURDATE(),INTERVAL -DAY(CURDATE())+1 DAY), INTERVAL #{month} MONTH), INTERVAL 1 WEEK) and merchant_id =#{mid}
     </select>
    <select id="queMerchantsYearByMid" resultType="int">
-       SELECT SUM(SUM) FROM order_info WHERE order_time&lt;=DATE_ADD(DATE_SUB( CURDATE( ), INTERVAL DAYOFYEAR( NOW( ) ) - 1 DAY ),INTERVAL ${year} YEAR)
+       SELECT SUM(SUM) FROM order_info WHERE order_timeDATE_ADD(DATE_SUB( CURDATE( ), INTERVAL DAYOFYEAR( NOW( ) ) - 1 DAY ),INTERVAL ${year} YEAR)
        AND order_time&gt;DATE_ADD(DATE_SUB( CURDATE( ), INTERVAL DAYOFYEAR( NOW( ) ) - 1 DAY ),INTERVAL ${year}-1 YEAR) and merchant_id =#{mid}
    </select>
+    <select id="AllowMerchantsEnter" resultMap="MerchantsMap" parameterType="merchants">
+        SELECT * FROM merchants WHERE m_state not in ('营业','禁用')
+        <if test="mName!=null">and m_name like concat('%',#{mName},'%')</if>
+    </select>
+    <select id="AllowMerchantsEnterCount" resultType="int" parameterType="merchants">
+        SELECT count(*) FROM merchants WHERE m_state not in ('营业','禁用')
+        <if test="mName!=null">and m_name like concat('%',#{mName},'%')</if>
+    </select>
 
 <!--    <select id="queMerchantsDelivery" resultMap="OrderInfoMap" parameterType="int">-->
 <!--        SELECT * FROM order_info where merchant_id =#{id};-->
@@ -188,7 +197,13 @@ SET
   order_state ='待提货'
 WHERE `order_id` = #{orderId} ;
     </update>
-
+<update id="AgreeMerchants">
+    UPDATE
+        `shoppingdb`.`merchants`
+    SET
+        m_state ='营业'
+    WHERE `m_id` = #{id} ;
+</update>
 
 
 </mapper>

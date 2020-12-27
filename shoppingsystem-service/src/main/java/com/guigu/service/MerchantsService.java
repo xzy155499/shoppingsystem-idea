@@ -1,6 +1,6 @@
 package com.guigu.service;
 
-import com.guigu.vo.Goods;
+
 import com.guigu.vo.Merchants;
 import com.guigu.vo.OrderInfo;
 import com.guigu.vo.PageVo;
@@ -32,4 +32,8 @@ public interface MerchantsService {
     List<Merchants> queMerchantsMonthByMid(int mid);
 
     List<Merchants> queMerchantsYearByMid(int mid);
+
+    PageVo<Merchants> AllowMerchantsEnter(Merchants merchants,int page,int rows);
+
+    int AgreeMerchants(int id);
 }

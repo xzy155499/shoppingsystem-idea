@@ -6,6 +6,7 @@ import com.guigu.service.GoodsService;
 import com.guigu.service.OrderInfoService;
 import com.guigu.vo.Goods;
 import com.guigu.vo.OrderInfo;
+import com.guigu.vo.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -41,6 +43,25 @@ public class OrderInfoController {
         return service.intoWarehouse(id,ids);
     }
 
+    @CrossOrigin
+    @RequestMapping(value="/queryAllOrderInfoGoods.action",produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String queryAllOrderInfoGoods() {
+        return JSONObject.toJSONString(service.queryAllOrderInfoGoods());
+    }
 
+    @CrossOrigin
+    @RequestMapping(value="/queHomeData.action")
+    @ResponseBody
+    public Map<String, Object> queHomeData() {
+        return service.queHomeData();
+    }
+
+    @CrossOrigin
+    @RequestMapping(value="/queOrderByUid.action")
+    @ResponseBody
+    public List<UserInfo> queOrderByUid() {
+        return service.queOrderByUid();
+    }
 
 }

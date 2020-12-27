@@ -36,4 +36,8 @@ public interface MerchantsDao {
 
     int queMerchantsYearByMid(@Param("mid")int mid,@Param("year")int year);
 
+    List<Merchants> AllowMerchantsEnter(Merchants merchants);
+    int AllowMerchantsEnterCount(Merchants merchants);
+
+    int AgreeMerchants(int id);
 }

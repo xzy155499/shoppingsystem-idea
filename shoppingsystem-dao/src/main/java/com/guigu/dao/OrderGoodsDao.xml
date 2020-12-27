@@ -4,10 +4,11 @@
     <resultMap id="OrderGoodsMap" type="OrderGoods">
         <result property="orderId" column="order_id"></result>
         <result property="goodsId" column="goods_id"></result>
+        <result property="priceInto" column="price_into"></result>
+        <result property="priceOut" column="price_out"></result>
         <collection property="goods" javaType="com.guigu.vo.Goods"
                     column="goods_id" select="com.guigu.dao.GoodsDao.queryGoodsById" fetchType="lazy">
         </collection>
-
     </resultMap>
     <select id="queOrderGoodsByOid" resultMap="OrderGoodsMap" parameterType="int">
             SELECT * FROM order_goods where  order_id =#{order_id}
