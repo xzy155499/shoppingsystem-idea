@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guigu.dao.GoodsChildDao">
+
+    <resultMap id="goodschildMap" type="GoodsChildtype">
+        <id column="c_id" property="cId"></id>
+        <result column="p_id" property="pId"></result>
+        <result column="c_name" property="cName"></result>
+        <result column="c_describe" property="cDescribe"></result>
+    </resultMap>
+<select id="queryAllGoodsChildType" resultMap="goodschildMap">
+    select * from goods_child_type where p_id=#{id}
+</select>
+
+    <select id="queryGoodsChildTypeById" resultMap="goodschildMap">
+        select * from goods_child_type where c_id = #{id}
+	</select>
+
+    <insert id="addGoodsChildType">
+        INSERT INTO `shoppingdb`.`goods_child_type` (
+  `p_id`,
+  `c_name`,
+  `c_describe`
+)
+VALUES
+  (
+    #{pId},
+    #{cName},
+    #{cDescribe}
+  ) ;
+    </insert>
+    <delete id="delGoodsChildType">
+        delete from `shoppingdb`.`goods_child_type` where c_id=#{id}
+    </delete>
+
+    <update id="updGoodsChildType">
+UPDATE
+  `shoppingdb`.`goods_child_type`
+SET
+  `c_name` = #{cName},
+  `c_describe` = #{cDescribe}
+WHERE `c_id` = #{cId} ;
+
+</update>
+
+</mapper>
