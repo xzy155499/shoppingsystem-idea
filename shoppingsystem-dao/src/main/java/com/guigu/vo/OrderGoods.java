@@ -1,7 +1,7 @@
 package com.guigu.vo;
 
 public class OrderGoods {
-    private Integer orderId;
+    private String orderId;
 
     private Integer goodsId;
 
@@ -26,11 +26,11 @@ public class OrderGoods {
                 '}';
     }
 
-    public Integer getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
@@ -82,7 +82,7 @@ public class OrderGoods {
         this.priceOut = priceOut;
     }
 
-    public OrderGoods(Integer orderId, Integer goodsId, Integer num, Double sum, Goods goods, int priceInto, int priceOut) {
+    public OrderGoods(String orderId, Integer goodsId, Integer num, Double sum, Goods goods, int priceInto, int priceOut) {
         this.orderId = orderId;
         this.goodsId = goodsId;
         this.num = num;

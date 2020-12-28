@@ -25,7 +25,16 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public List<Goods> queryGoodsById(int id) {
-        return dao.queryGoodsById(id);
+        List<Goods> list = dao.queryGoodsById(id);
+        for (Goods g :list){
+            g.setType(g.getGoodsParentType().getpName()+"---"+g.getGoodsChildType().getcName());
+            try {
+                g.setWarehouseNum(wdao.queWarehouseNumByGid(g.getgId()));
+            }catch (Exception e){
+                g.setWarehouseNum(0);
+            }
+        }
+        return list;
     }
 
     @Override
