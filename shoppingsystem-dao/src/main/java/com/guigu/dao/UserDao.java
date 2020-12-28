@@ -23,4 +23,8 @@ public interface UserDao {
     public int editUser(UserInfo userInfo);
     //删除
     public int delUser(int id);
+    //查询今日注册用户
+    int queryUserDay();
+    //查询本月注册用户
+    int queryUserMonth();
 }

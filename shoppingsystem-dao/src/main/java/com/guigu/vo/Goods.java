@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.Date;
 
-public class Goods {
+public class Goods  implements Comparable<Goods> {
     private Integer gId;
 
     private String gName;
@@ -207,4 +207,9 @@ public class Goods {
     }
 
     public Goods(){}
+
+    @Override
+    public int compareTo(Goods o) {
+        return o.getgParent()-this.gParent;
+    }
 }

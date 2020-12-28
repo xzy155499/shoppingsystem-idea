@@ -35,8 +35,39 @@
   <select id="queryOrderInfoById" parameterType="orderinfo" resultMap="OrderInfoMap">
     SELECT * FROM order_info where order_id=#{id}
   </select>
-
-
+  <select id="queryAllOrderInfoGoodsDay"  resultMap="OrderInfoMap">
+    SELECT o.* FROM order_info o
+                    INNER JOIN order_goods g ON o.order_id=g.order_id
+    WHERE TO_DAYS(order_time) = TO_DAYS(NOW()) AND g.goods_id=#{gid}
+  </select>
+  <select id="queryAllOrderInfoGoodsWeeks"  resultMap="OrderInfoMap">
+    SELECT o.* FROM order_info o
+    INNER JOIN order_goods g ON o.order_id=g.order_id
+    WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(order_time) AND g.goods_id=#{gid};
+  </select>
+  <select id="queryAllOrderInfoGoodsMonth"  resultMap="OrderInfoMap">
+    SELECT o.* FROM order_info o
+                      INNER JOIN order_goods g ON o.order_id=g.order_id
+    WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(order_time) AND g.goods_id=#{gid};
+  </select>
+  <select id="queryAllOrderInfoDay" resultType="int" >
+    SELECT COUNT(*) FROM order_info  WHERE TO_DAYS(order_time) = TO_DAYS(NOW())
+  </select>
+  <select id="queryAllOrderInfoMonth" resultType="int">
+    SELECT COUNT(*) FROM order_info
+    WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(order_time)
+  </select>
+  <select id="queryAllOrderInfoGoodsDayProfits" resultMap="OrderInfoMap">
+    SELECT * FROM order_info
+    WHERE TO_DAYS(order_time) = TO_DAYS(NOW())
+  </select>
+  <select id="queryAllOrderInfoGoodsMontyProfits" resultMap="OrderInfoMap">
+    SELECT * FROM order_info
+    WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(order_time)
+  </select>
+  <select id="queOrderByUid" parameterType="int" resultMap="OrderInfoMap">
+    SELECT * FROM order_info where user_id=#{uid}
+  </select>
   <update id="updOrderInfoInto" parameterType="OrderInfo">
 UPDATE
   `shoppingdb`.`order_info`

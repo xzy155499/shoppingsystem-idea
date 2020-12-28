@@ -111,4 +111,19 @@ public class MerchantsController {
     public List<Merchants> queMerchantsYearByMid(@RequestParam(value = "mid", defaultValue = "1")int mid) {
         return service.queMerchantsYearByMid(mid);
     }
+    @CrossOrigin
+    @RequestMapping(value="/AllowMerchantsEnter.action")
+    @ResponseBody
+    public PageVo<Merchants> AllowMerchantsEnter(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                 @RequestParam(value = "rows", defaultValue = "5") int rows,Merchants merchants) {
+        return service.AllowMerchantsEnter(merchants,page,rows);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value="/AgreeMerchants.action")
+    @ResponseBody
+    public int AgreeMerchants(int id) {
+        return service.AgreeMerchants(id);
+    }
+
 }
