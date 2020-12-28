@@ -25,7 +25,12 @@ public class OrderCartServiceImpl implements OrderCartService {
 
     @Override
     public OrderCart gIdExistShoppingCart(OrderCart orderCart) {
-        return orderCartDao.gIdExistShoppingCart(orderCart);
+//        try {
+            return orderCartDao.gIdExistShoppingCart(orderCart);
+//        }catch (Exception e){
+//            return null;
+//        }
+
     }
 
     @Override

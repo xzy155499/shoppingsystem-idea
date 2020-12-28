@@ -24,8 +24,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     UserDao udao;
 
     @Override
-    public List<OrderInfo> queryOrderInfoById(int id) {
-        return null;
+    public OrderInfo queryOrderInfoById(int id) {
+        return dao.queryOrderInfoById(id);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     @Override
     public int addOrderInfo(OrderInfo orderInfo) {
-        return 0;
+        return dao.addOrderInfo(orderInfo);
     }
 
     @Override

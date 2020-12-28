@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public class OrderInfo {
-    private Integer orderId;
+    private String orderId;
 
     private Integer userId;
 
@@ -57,11 +57,11 @@ public class OrderInfo {
                 '}';
     }
 
-    public Integer getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
@@ -177,7 +177,7 @@ public class OrderInfo {
         this.list = list;
     }
 
-    public OrderInfo(Integer orderId, Integer userId, Integer merchantId, Integer empId, Double sum, Date orderTime, Date deliveryTime, Date receiptTime, Date pickTime, String orderState, String remake, EmpInfo empInfo, UserInfo userInfo, Merchants merchants, List<OrderGoods> list) {
+    public OrderInfo(String orderId, Integer userId, Integer merchantId, Integer empId, Double sum, Date orderTime, Date deliveryTime, Date receiptTime, Date pickTime, String orderState, String remake, EmpInfo empInfo, UserInfo userInfo, Merchants merchants, List<OrderGoods> list) {
         this.orderId = orderId;
         this.userId = userId;
         this.merchantId = merchantId;

@@ -64,4 +64,11 @@ public class OrderInfoController {
         return service.queOrderByUid();
     }
 
+    @CrossOrigin
+    @RequestMapping(value="/addOrderInfo.action")
+    @ResponseBody
+    public int addOrderInfo(OrderInfo orderInfo) {
+        return service.addOrderInfo(orderInfo);
+    }
+
 }

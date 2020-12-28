@@ -1,74 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.guigu.dao.OrderInfoDao">
-  <resultMap id="OrderInfoMap" type="OrderInfo">
-    <id column="order_id" property="orderId"></id>
-    <result column="user_id" property="userId" ></result>
-    <result column="merchant_id" property="merchantId" ></result>
-    <result column="emp_id" property="empId" ></result>
-    <result column="order_time" property="orderTime" ></result>
-    <result column="delivery_time" property="deliveryTime" ></result>
-    <result column="receipt_time" property="receiptTime" ></result>
-    <result column="pick_time" property="pickTime" ></result>
-    <result column="order_state" property="orderState" ></result>
-    <collection property="empInfo" javaType="com.guigu.vo.EmpInfo"
-                column="emp_id" select="com.guigu.dao.EmpDao.queEmpByIdId" fetchType="lazy">
-    </collection>
-    <collection property="userInfo" javaType="com.guigu.vo.UserInfo"
-                column="user_id" select="com.guigu.dao.UserDao.queryByIdUser" fetchType="lazy">
-    </collection>
-    <collection property="merchants" javaType="com.guigu.vo.Merchants"
-                column="merchant_id" select="com.guigu.dao.MerchantsDao.queryMerchantsById" fetchType="lazy">
-    </collection>
-    <collection property="list" javaType="list"
-                column="order_id" select="com.guigu.dao.OrderGoodsDao.queOrderGoodsByOid" fetchType="lazy">
-    </collection>
+    <resultMap id="OrderInfoMap" type="OrderInfo">
+        <id column="order_id" property="orderId"></id>
+        <result column="user_id" property="userId"></result>
+        <result column="merchant_id" property="merchantId"></result>
+        <result column="emp_id" property="empId"></result>
+        <result column="sum" property="sum"></result>
+        <result column="order_time" property="orderTime"></result>
+        <result column="delivery_time" property="deliveryTime"></result>
+        <result column="receipt_time" property="receiptTime"></result>
+        <result column="pick_time" property="pickTime"></result>
+        <result column="order_state" property="orderState"></result>
+        <result column="remake" property="remake"></result>
+        <collection property="empInfo" javaType="com.guigu.vo.EmpInfo"
+                    column="emp_id" select="com.guigu.dao.EmpDao.queEmpByIdId" fetchType="lazy">
+        </collection>
+        <collection property="userInfo" javaType="com.guigu.vo.UserInfo"
+                    column="user_id" select="com.guigu.dao.UserDao.queryByIdUser" fetchType="lazy">
+        </collection>
+        <collection property="merchants" javaType="com.guigu.vo.Merchants"
+                    column="merchant_id" select="com.guigu.dao.MerchantsDao.queryMerchantsById" fetchType="lazy">
+        </collection>
+        <collection property="list" javaType="list"
+                    column="order_id" select="com.guigu.dao.OrderGoodsDao.queOrderGoodsByOid" fetchType="lazy">
+        </collection>
 
+    </resultMap>
 
-  </resultMap>
-  <select id="queryAllOrderInfo" parameterType="orderinfo" resultMap="OrderInfoMap">
+    <insert id="addOrderInfo" parameterType="OrderInfo">
+    INSERT INTO order_info(order_id,user_id,sum,order_time)
+    VALUES (#{orderId} ,#{userId},#{sum},now())
+  </insert>
+
+    <select id="queryAllOrderInfo" parameterType="orderinfo" resultMap="OrderInfoMap">
     SELECT * FROM order_info where order_state ='已下单'
   </select>
-  <select id="queryAllOrderInfoCond" parameterType="orderinfo" resultType="int">
+    <select id="queryAllOrderInfoCond" parameterType="orderinfo" resultType="int">
     SELECT count(*) FROM order_info where order_state ='已下单'
   </select>
-  <select id="queryOrderInfoById" parameterType="orderinfo" resultMap="OrderInfoMap">
+    <select id="queryOrderInfoById" parameterType="int" resultMap="OrderInfoMap">
     SELECT * FROM order_info where order_id=#{id}
   </select>
-  <select id="queryAllOrderInfoGoodsDay"  resultMap="OrderInfoMap">
+    <select id="queryAllOrderInfoGoodsDay" resultMap="OrderInfoMap">
     SELECT o.* FROM order_info o
                     INNER JOIN order_goods g ON o.order_id=g.order_id
     WHERE TO_DAYS(order_time) = TO_DAYS(NOW()) AND g.goods_id=#{gid}
   </select>
-  <select id="queryAllOrderInfoGoodsWeeks"  resultMap="OrderInfoMap">
+    <select id="queryAllOrderInfoGoodsWeeks" resultMap="OrderInfoMap">
     SELECT o.* FROM order_info o
     INNER JOIN order_goods g ON o.order_id=g.order_id
     WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= DATE(order_time) AND g.goods_id=#{gid};
   </select>
-  <select id="queryAllOrderInfoGoodsMonth"  resultMap="OrderInfoMap">
+    <select id="queryAllOrderInfoGoodsMonth" resultMap="OrderInfoMap">
     SELECT o.* FROM order_info o
                       INNER JOIN order_goods g ON o.order_id=g.order_id
     WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(order_time) AND g.goods_id=#{gid};
   </select>
-  <select id="queryAllOrderInfoDay" resultType="int" >
+    <select id="queryAllOrderInfoDay" resultType="int">
     SELECT COUNT(*) FROM order_info  WHERE TO_DAYS(order_time) = TO_DAYS(NOW())
   </select>
-  <select id="queryAllOrderInfoMonth" resultType="int">
+    <select id="queryAllOrderInfoMonth" resultType="int">
     SELECT COUNT(*) FROM order_info
     WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(order_time)
   </select>
-  <select id="queryAllOrderInfoGoodsDayProfits" resultMap="OrderInfoMap">
+    <select id="queryAllOrderInfoGoodsDayProfits" resultMap="OrderInfoMap">
     SELECT * FROM order_info
     WHERE TO_DAYS(order_time) = TO_DAYS(NOW())
   </select>
-  <select id="queryAllOrderInfoGoodsMontyProfits" resultMap="OrderInfoMap">
+    <select id="queryAllOrderInfoGoodsMontyProfits" resultMap="OrderInfoMap">
     SELECT * FROM order_info
     WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(order_time)
   </select>
-  <select id="queOrderByUid" parameterType="int" resultMap="OrderInfoMap">
+    <select id="queOrderByUid" parameterType="int" resultMap="OrderInfoMap">
     SELECT * FROM order_info where user_id=#{uid}
   </select>
-  <update id="updOrderInfoInto" parameterType="OrderInfo">
+    <update id="updOrderInfoInto" parameterType="OrderInfo">
 UPDATE
   `shoppingdb`.`order_info`
 SET

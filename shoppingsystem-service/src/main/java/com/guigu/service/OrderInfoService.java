@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface OrderInfoService {
 
-    List<OrderInfo> queryOrderInfoById(int id);
+    OrderInfo queryOrderInfoById(int id);
 
     PageVo<OrderInfo> queryAllOrderInfo(int page, int rows, OrderInfo orderInfo);
 
