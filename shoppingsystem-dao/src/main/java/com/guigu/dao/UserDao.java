@@ -6,13 +6,15 @@ import java.util.List;
 
 public interface UserDao {
     //登录检测
-    public int userLogin(UserInfo userInfo);
+    public UserInfo userLogin(UserInfo userInfo);
+
+    //注册
+    int registerUser(UserInfo userInfo);
+
     //查询用户
     public List<UserInfo> queryAllUser(UserInfo userInfo);
     //查询用户表数据总量
     public int queryCountUser(UserInfo userInfo);
-    //添加(注册)
-    public int addUser(UserInfo userInfo);
     //后台添加
     public int addUsers(UserInfo userInfo);
     //根据id查用户

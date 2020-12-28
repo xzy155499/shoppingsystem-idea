@@ -16,8 +16,13 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
 
     @Override
-    public int userLogin(UserInfo userInfo) {
+    public UserInfo userLogin(UserInfo userInfo) {
         return userDao.userLogin(userInfo);
+    }
+
+    @Override
+    public int registerUser(UserInfo userInfo) {
+        return userDao.registerUser(userInfo);
     }
 
     @Override
@@ -30,11 +35,6 @@ public class UserServiceImpl implements UserService {
         pageVo.setTotal(userDao.queryCountUser(userInfo));
 
         return pageVo;
-    }
-
-    @Override
-    public int addUser(UserInfo userInfo) {
-        return userDao.addUser(userInfo);
     }
 
     @Override

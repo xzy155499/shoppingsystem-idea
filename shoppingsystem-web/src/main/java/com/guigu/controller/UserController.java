@@ -1,7 +1,9 @@
 package com.guigu.controller;
 
 import com.guigu.service.UserService;
+import com.guigu.vo.EmpInfo;
 import com.guigu.vo.PageVo;
+import com.guigu.vo.RoleInfo;
 import com.guigu.vo.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,18 +12,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
     @Autowired
     UserService userService;
+    //登录
     @CrossOrigin
-    @RequestMapping("/userlogin.action")
+    @RequestMapping("/loginUser.action")
     @ResponseBody
-    public int userLogin(UserInfo userInfo) {
-        return userService.userLogin(userInfo);
+    public Map userLogin(UserInfo userInfo) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        UserInfo userInfo1 = userService.userLogin(userInfo);
+        if (userInfo1 != null) {
+            map.put("code", 0);
+            map.put("user", userInfo1);
+        }else {
+            map.put("code", "1");
+            map.put("msg", "手机号或者密码错误");
+        }
+        return map;
     }
+    //注册
+    @CrossOrigin
+    @RequestMapping("/registerUser.action")
+    @ResponseBody
+    public int registerUser(UserInfo userInfo) {
+        return userService.registerUser(userInfo);
+    }
+
+
     @CrossOrigin
     @RequestMapping("/queryAllUser.action")
     @ResponseBody
@@ -29,12 +52,6 @@ public class UserController {
                                          @RequestParam(value = "page", defaultValue = "1") int page,
                                          @RequestParam(value = "rows", defaultValue = "10") int rows) {
         return userService.queryAllUser(userInfo, page, rows);
-    }
-    @CrossOrigin
-    @RequestMapping("/addUser.action")
-    @ResponseBody
-    public int addUser(UserInfo userInfo) {
-        return userService.addUser(userInfo);
     }
     @CrossOrigin
     @RequestMapping("/addUsers.action")

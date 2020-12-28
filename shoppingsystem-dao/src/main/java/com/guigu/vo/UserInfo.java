@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class UserInfo {
     //用户编号
-    private int user_id;
+    private Integer user_id;
     //姓名
     private String user_name;
     //头像
@@ -18,17 +18,15 @@ public class UserInfo {
     private Date birth_date;
     //身份证号
     private String id_number;
-    //联系电话
+    //联系电话 账号
     private String phone;
-    //账号
-    private String account;
     //密码
     private String pass;
 
     public UserInfo() {
     }
 
-    public UserInfo(int user_id, String user_name, String photo, String user_sex, Date birth_date, String id_number, String phone, String account, String pass) {
+    public UserInfo(Integer user_id, String user_name, String photo, String user_sex, Date birth_date, String id_number, String phone,  String pass) {
         this.user_id = user_id;
         this.user_name = user_name;
         this.photo = photo;
@@ -36,11 +34,10 @@ public class UserInfo {
         this.birth_date = birth_date;
         this.id_number = id_number;
         this.phone = phone;
-        this.account = account;
         this.pass = pass;
     }
 
-    public int getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
@@ -96,13 +93,6 @@ public class UserInfo {
         this.phone = phone;
     }
 
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
 
     public String getPass() {
         return pass;
@@ -122,7 +112,6 @@ public class UserInfo {
                 ", birth_date=" + birth_date +
                 ", id_number='" + id_number + '\'' +
                 ", phone='" + phone + '\'' +
-                ", account='" + account + '\'' +
                 ", pass='" + pass + '\'' +
                 '}';
     }
