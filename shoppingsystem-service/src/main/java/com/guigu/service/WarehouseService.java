@@ -15,4 +15,8 @@ public interface WarehouseService {
     int delWarehouse(int id);
 
     int updWarehouse(Warehouse warehouse);
+
+    List<Warehouse> queWarehouseStatistical();
+
+    int turnWarehouse(int wid,int newwid,String nums,String gids);
 }

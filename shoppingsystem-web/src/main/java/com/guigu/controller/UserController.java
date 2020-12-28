@@ -58,7 +58,13 @@ public class UserController {
     @RequestMapping("/editUser.action")
     @ResponseBody
     public int editUser(UserInfo userInfo) {
-        System.out.println(userInfo);
         return userService.editUser(userInfo);
     }
+    @CrossOrigin
+    @RequestMapping("/queDayUser.action")
+    @ResponseBody
+    public List<UserInfo> queDayUser( ) {
+        return userService.queDayUser();
+    }
+
 }

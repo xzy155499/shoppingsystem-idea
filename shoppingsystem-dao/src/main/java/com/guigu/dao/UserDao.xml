@@ -28,10 +28,15 @@
         SELECT COUNT(*) FROM user_info
         WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(registered_time)
     </select>
+    <select id="queDayUser" resultType="userinfo">
+        SELECT * FROM user_info  WHERE TO_DAYS(registered_time) = TO_DAYS(NOW())
+    </select>
 
     <insert id="addUser" parameterType="userinfo">
         INSERT INTO user_info VALUES(NULL,'','','',#{birth_date},'',#{account},#{phone},#{pass})
     </insert>
+
+
 
     <insert id="addUsers" parameterType="userinfo">
         INSERT INTO user_info VALUES(NULL,#{user_name},#{photo},#{user_sex},#{birth_date},#{id_number},#{account},#{phone},#{pass})

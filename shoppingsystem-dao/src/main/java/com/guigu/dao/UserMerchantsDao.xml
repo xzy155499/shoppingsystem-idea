@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guigu.dao.UserMerchantsDao">
+    <resultMap id="UserMerchantsMap" type="UserMerchants">
+        <id property="umId" column="um_id"></id>
+        <result property="uId" column="u_id"></result>
+        <result property="mId" column="m_id"></result>
+    </resultMap>
+    <insert id="addUserMerchants" parameterType="UserMerchants">
+        INSERT INTO `shoppingdb`.`user_merchants` ( `u_id`, `m_id`)
+        VALUES
+            ( #{uId}, #{mId}) ;
+    </insert>
+</mapper>

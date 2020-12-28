@@ -56,4 +56,9 @@ public class UserServiceImpl implements UserService {
     public int delUser(int id) {
         return userDao.delUser(id);
     }
+
+    @Override
+    public List<UserInfo> queDayUser() {
+        return userDao.queDayUser();
+    }
 }

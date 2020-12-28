@@ -18,11 +18,14 @@
                     column="w_id" select="com.guigu.dao.WarehouseDao.queryWarehouseById" fetchType="lazy">
         </collection>
     </resultMap>
-    <resultMap id="warehousegoodsMap1" type=    "warehousegoods">
+    <resultMap id="warehousegoodsMap1" type="warehousegoods">
         <id column="wg_id" property="wgId"></id>
         <result column="w_id" property="wId"></result>
         <result column="g_id" property="gId"></result>
         <result column="wg_num" property="wgNum"></result>
+        <collection property="goods" javaType="com.guigu.vo.Goods"
+                    column="g_id" select="com.guigu.dao.GoodsDao.queryGoodsById" fetchType="lazy">
+        </collection>
     </resultMap>
 
     <select id="queryWarehouseGoodsById" resultMap="warehousegoodsMap1">
@@ -37,8 +40,8 @@
     <select id="queWarehouseNumByGid" resultType="int"  parameterType="int">
         SELECT SUM(wg_num) FROM warehouse_goods WHERE g_id =#{id}
     </select>
-    <select id="queWarehouseGoodsByWid">
-        select count(*) from warehouse_goods where w_id=#{wId} and g_id=#{gId}
+    <select id="queWarehouseGoodsByWid" parameterType="map" resultType="int">
+        select count(*) from warehouse_goods where w_id=#{wid} and g_id=#{gid}
     </select>
     <insert id="addWarehouseGoods">
 INSERT INTO `shoppingdb`.`warehouse_goods` (`p_name`, `p_describe`)

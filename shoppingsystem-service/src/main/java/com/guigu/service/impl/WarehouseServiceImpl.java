@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.guigu.dao.GoodsDao;
 import com.guigu.dao.GoodsParentDao;
 import com.guigu.dao.WarehouseDao;
+import com.guigu.dao.WarehouseGoodsDao;
 import com.guigu.service.WarehouseService;
 import com.guigu.service.GoodsService;
 import com.guigu.vo.Goods;
@@ -19,6 +20,8 @@ import java.util.List;
 public class WarehouseServiceImpl implements WarehouseService {
     @Autowired
     WarehouseDao dao;
+    @Autowired
+    WarehouseGoodsDao wgdao;
 
     @Override
     public PageVo<Warehouse> queryAllWarehouse( int page, int rows, Warehouse warehouse) {
@@ -32,7 +35,6 @@ public class WarehouseServiceImpl implements WarehouseService {
             }else{
                 w.setDetailedAddress(w.getwProvince()+"-"+w.getwCity()+"-"+w.getwCounty());
             }
-
         }
         //获取分页后 显示的数据集合
         pageVo.setRows(list);
@@ -54,5 +56,31 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public int updWarehouse(Warehouse warehouse) {
         return dao.updWarehouse(warehouse);
+    }
+
+    @Override
+    public List<Warehouse> queWarehouseStatistical() {
+        return dao.queWarehouseStatistical();
+    }
+
+    @Override
+    public int turnWarehouse(int wid, int newwid, String nums, String gids) {
+        String[] num = nums.split(",");
+        String[] id = gids.split(",");
+        for (int i = 0; i <id.length ; i++) {
+            //添加仓库商品数量
+
+                int row = wgdao.queWarehouseGoodsByWid(newwid,Integer.parseInt(id[i]));
+                int upd =wgdao.updWarehouseGoodsnum(newwid,Integer.parseInt(id[i]),Integer.parseInt(num[i]));
+                if (row==0){
+                    int add = wgdao.addWarehouseGoodsnum(newwid,Integer.parseInt(id[i]),Integer.parseInt(num[i]));
+
+                }
+            //减去仓库商品数量
+            int add1 = wgdao.updWarehouseGoodsnum(wid,Integer.parseInt(id[i]),-(Integer.parseInt(num[i])));
+        }
+
+
+        return 0;
     }
 }

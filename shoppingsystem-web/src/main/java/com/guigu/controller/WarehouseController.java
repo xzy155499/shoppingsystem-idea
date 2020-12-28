@@ -51,6 +51,19 @@ public class WarehouseController {
         return service.updWarehouse(warehouse);
     }
 
+    @CrossOrigin
+    @RequestMapping(value="/queWarehouseStatistical.action")
+    @ResponseBody
+    public List<Warehouse> queWarehouseStatistical() {
+        return service.queWarehouseStatistical();
+    }
+    @CrossOrigin
+    @RequestMapping(value="/turnWarehouse.action")
+    @ResponseBody
+    public int turnWarehouse(int wid,int newwid,String nums,String gids) {
+        return service.turnWarehouse(wid,newwid,nums,gids);
+    }
+
 
 
 

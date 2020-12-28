@@ -21,4 +21,6 @@ public interface UserService {
     public int editUser(UserInfo userInfo);
     //删除
     public int delUser(int id);
+    //今日新增用户
+    List<UserInfo> queDayUser();
 }

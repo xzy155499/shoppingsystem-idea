@@ -37,13 +37,13 @@ public class WarehouseGoodsServiceImpl implements WarehouseGoodsService {
         String[] id = ids.split(",");
         String[] num = nums.split(",");
         for (int i = 0; i <id.length ; i++) {
+            //最后一次采购时间
             gdao.updFinalPurchase(Integer.parseInt(id[i]));
-            try {
-                int row = dao.queWarehouseGoodsByWid(Integer.parseInt(id[i]),Integer.parseInt(num[i]));
+                int row = dao.queWarehouseGoodsByWid(wid,Integer.parseInt(id[i]));
                 int upd =dao.updWarehouseGoodsnum(wid,Integer.parseInt(id[i]),Integer.parseInt(num[i]));
-            }catch (Exception e){
+                if (row==0){
                 int add = dao.addWarehouseGoodsnum(wid,Integer.parseInt(id[i]),Integer.parseInt(num[i]));
-           }
+                }
         }
         return 0;
     }
