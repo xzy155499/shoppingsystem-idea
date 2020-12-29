@@ -27,4 +27,7 @@ public interface UserDao {
     int queryUserDay();
     //查询本月注册用户
     int queryUserMonth();
+
+    
+
 }

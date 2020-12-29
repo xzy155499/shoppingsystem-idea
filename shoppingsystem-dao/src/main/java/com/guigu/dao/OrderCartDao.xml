@@ -36,7 +36,7 @@
 
     <delete id="delShoppingCartById">
         DELETE FROM order_cart
-        WHERE id = #{id}
+        WHERE user_id = #{uid} and goods_id = {gId}
     </delete>
 
     <insert id="addShoppingCart">

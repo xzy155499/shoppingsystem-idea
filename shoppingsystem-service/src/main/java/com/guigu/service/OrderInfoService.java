@@ -10,17 +10,17 @@ import java.util.Map;
 
 public interface OrderInfoService {
 
-    OrderInfo queryOrderInfoById(int id);
+    OrderInfo queryOrderInfoById(String id);
 
     PageVo<OrderInfo> queryAllOrderInfo(int page, int rows, OrderInfo orderInfo);
 
     int addOrderInfo(OrderInfo orderInfo);
 
-    int delOrderInfo(int id);
+    int delOrderInfo(String id);
 
     int updOrderInfo(OrderInfo orderInfo);
 
-    int intoWarehouse(int id,String ids);
+    int intoWarehouse(String id,String ids);
 
     List<Goods> queryAllOrderInfoGoods();
 

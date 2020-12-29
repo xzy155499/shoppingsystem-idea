@@ -28,7 +28,13 @@
         INSERT INTO user_info(phone,pass)
         VALUES (#{phone},#{pass})
      </insert>
-
+    <select id="queryUserDay" resultType="int" >
+        SELECT COUNT(*) FROM user_info  WHERE TO_DAYS(registered_time) = TO_DAYS(NOW())
+    </select>
+    <select id="queryUserMonth" resultType="int">
+        SELECT COUNT(*) FROM user_info
+        WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= DATE(registered_time)
+    </select>
     <insert id="addUsers" parameterType="userinfo">
         INSERT INTO user_info VALUES(NULL,#{user_name},#{photo},#{user_sex},#{birth_date},#{id_number},#{phone},#{pass})
     </insert>

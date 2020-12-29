@@ -39,7 +39,7 @@
     <select id="queryAllOrderInfoCond" parameterType="orderinfo" resultType="int">
     SELECT count(*) FROM order_info where order_state ='已下单'
   </select>
-    <select id="queryOrderInfoById" parameterType="int" resultMap="OrderInfoMap">
+    <select id="queryOrderInfoById" parameterType="String" resultMap="OrderInfoMap">
     SELECT * FROM order_info where order_id=#{id}
   </select>
     <select id="queryAllOrderInfoGoodsDay" resultMap="OrderInfoMap">
@@ -82,4 +82,5 @@ SET
   `order_state` = '已发货'
 WHERE `order_id` = #{id} ;
   </update>
+    
 </mapper>

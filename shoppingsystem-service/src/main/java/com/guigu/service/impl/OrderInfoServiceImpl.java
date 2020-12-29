@@ -24,7 +24,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     UserDao udao;
 
     @Override
-    public OrderInfo queryOrderInfoById(int id) {
+    public OrderInfo queryOrderInfoById(String id) {
         return dao.queryOrderInfoById(id);
     }
 
@@ -47,7 +47,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     @Override
-    public int delOrderInfo(int id) {
+    public int delOrderInfo(String id) {
         return 0;
     }
 
@@ -56,8 +56,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return 0;
     }
 
+
     @Override
-    public int intoWarehouse(int id,String ids) {
+    public int intoWarehouse(String id,String ids) {
         OrderInfo o = dao.queryOrderInfoById(id);
         //最后一次出售时间
         for (int i = 0; i < o.getList().size(); i++) {

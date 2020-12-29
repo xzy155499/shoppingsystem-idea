@@ -1,6 +1,7 @@
 package com.guigu.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.guigu.service.GoodsService;
 import com.guigu.service.OrderInfoService;
@@ -39,8 +40,15 @@ public class OrderInfoController {
     @CrossOrigin
     @RequestMapping(value="/intoWarehouse.action",produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public int intoWarehouse(int id ,String ids) {
+    public int intoWarehouse(String id ,String ids) {
         return service.intoWarehouse(id,ids);
+    }
+
+ @CrossOrigin
+    @RequestMapping(value="/queryOrderInfoById.action")
+    @ResponseBody
+    public String queryOrderInfoById(String id) {
+        return JSON.toJSONString(service.queryOrderInfoById(id));
     }
 
     @CrossOrigin

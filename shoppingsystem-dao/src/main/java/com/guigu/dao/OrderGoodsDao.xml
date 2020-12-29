@@ -12,7 +12,7 @@
                     column="goods_id" select="com.guigu.dao.GoodsDao.queryGoodsById" fetchType="lazy">
         </collection>
     </resultMap>
-    <select id="queOrderGoodsByOid" resultMap="OrderGoodsMap" parameterType="int">
+    <select id="queOrderGoodsByOid" resultMap="OrderGoodsMap" parameterType="String">
         SELECT * FROM order_goods where  order_id =#{order_id}
     </select>
 
