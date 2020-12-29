@@ -79,4 +79,13 @@ public class OrderInfoController {
         return service.addOrderInfo(orderInfo);
     }
 
+    //修改订单状态
+    @CrossOrigin
+    @RequestMapping(value="/updOrderInfoState.action")
+    @ResponseBody
+    public int updOrderInfoState(OrderInfo orderInfo) {
+        return service.updOrderInfoState(orderInfo);
+    }
+
+
 }

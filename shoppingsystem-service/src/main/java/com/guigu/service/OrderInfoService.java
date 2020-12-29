@@ -27,4 +27,6 @@ public interface OrderInfoService {
     Map<String,Object> queHomeData();
 
     List<UserInfo> queOrderByUid();
+
+    int updOrderInfoState(OrderInfo orderInfo);
 }

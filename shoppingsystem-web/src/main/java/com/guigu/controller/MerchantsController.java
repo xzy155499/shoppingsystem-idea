@@ -42,6 +42,15 @@ public class MerchantsController {
     }
 
     @CrossOrigin
+    @RequestMapping(value="/addImg.action")
+    @ResponseBody
+    public String addImg(MultipartFile img) throws IOException {
+        String imgurl="../src/assets/img/"+img.getOriginalFilename();
+        img.transferTo(new File("E:\\idea\\shoppingsystem-vue1\\src\\assets\\img\\"+img.getOriginalFilename()));
+        return imgurl;
+    }
+
+    @CrossOrigin
     @RequestMapping(value="/delMerchants.action")
     @ResponseBody
     public int delMerchants(int id) {
@@ -114,9 +123,9 @@ public class MerchantsController {
     @CrossOrigin
     @RequestMapping(value="/AllowMerchantsEnter.action")
     @ResponseBody
-    public PageVo<Merchants> AllowMerchantsEnter(@RequestParam(value = "page", defaultValue = "1") int page,
+    public String AllowMerchantsEnter(@RequestParam(value = "page", defaultValue = "1") int page,
                                                  @RequestParam(value = "rows", defaultValue = "5") int rows,Merchants merchants) {
-        return service.AllowMerchantsEnter(merchants,page,rows);
+        return JSONObject.toJSONString(service.AllowMerchantsEnter(merchants,page,rows));
     }
 
     @CrossOrigin

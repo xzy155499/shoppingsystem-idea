@@ -1,7 +1,9 @@
 package com.guigu.service;
 
+import com.guigu.vo.OrderInfo;
 import com.guigu.vo.PageVo;
 import com.guigu.vo.UserInfo;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,4 +24,8 @@ public interface UserService {
     public int editUser(UserInfo userInfo);
     //删除
     public int delUser(int id);
+    //今日新增用户
+    List<UserInfo> queDayUser();
+    //查询用户订单
+    PageVo<OrderInfo> queOrderByUid(int uid, String state, int page, int rows);
 }

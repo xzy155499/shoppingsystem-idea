@@ -19,4 +19,7 @@ public interface WarehouseDao {
     int delWarehouse(int id);
 
     int updWarehouse(Warehouse warehouse);
+
+    List<Warehouse> queWarehouseStatistical();
+
 }

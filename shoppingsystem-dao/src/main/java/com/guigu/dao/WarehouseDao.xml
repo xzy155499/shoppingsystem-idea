@@ -35,6 +35,12 @@
         </where>
 	</select>
 
+    <select id="queWarehouseStatistical"
+            resultType="Warehouse">
+        SELECT COUNT(*) wId,w_province wProvince FROM warehouse GROUP BY w_province ORDER BY w_id DESC
+    </select>
+
+
     <insert id="addWarehouse">
 INSERT INTO `shoppingdb`.`warehouse` (
   `w_name`,

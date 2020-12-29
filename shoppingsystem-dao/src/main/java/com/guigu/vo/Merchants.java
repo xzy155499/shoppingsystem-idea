@@ -34,6 +34,7 @@ public class Merchants {
     private String mDetailed;
 
     private String mDetailedAddress;
+
     @JSONField(format="yyyy-MM-dd hh:mm:ss")
     private Date mTime;
 

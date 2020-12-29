@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface WarehouseGoodsDao {
 
-
     List<WarehouseGoods> queryAllWarehouseGoods(WarehouseGoods warehouseGoods);
 
     WarehouseGoods queryWarehouseGoodsById(int id);
