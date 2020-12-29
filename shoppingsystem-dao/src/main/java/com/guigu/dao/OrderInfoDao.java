@@ -1,6 +1,7 @@
 package com.guigu.dao;
 
 import com.guigu.vo.OrderInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -34,6 +35,9 @@ public interface OrderInfoDao {
     List<OrderInfo> queryAllOrderInfoGoodsDayProfits();
     //查询月利润
     List<OrderInfo> queryAllOrderInfoGoodsMontyProfits();
+    //根据用户id查询订单
+    List<OrderInfo> queOrderByUidAndState(@Param("uid")int uid,@Param("state")String state);
+    int queOrderByUidAndStateCount(@Param("uid")int uid,@Param("state")String state);
 
-
+    int updOrderInfoState(OrderInfo orderInfo);
 }

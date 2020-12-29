@@ -75,6 +75,14 @@
     <select id="queOrderByUid" parameterType="int" resultMap="OrderInfoMap">
     SELECT * FROM order_info where user_id=#{uid}
   </select>
+<select id="queOrderByUidAndState" resultMap="OrderInfoMap">
+SELECT * FROM order_info where user_id=#{uid} and order_state=#{state}
+</select>
+
+    <select id="queOrderByUidAndStateCount" resultType="int">
+        SELECT count(*) FROM order_info where user_id=#{uid} and order_state=#{state}
+    </select>
+
     <update id="updOrderInfoInto" parameterType="OrderInfo">
 UPDATE
   `shoppingdb`.`order_info`
@@ -82,4 +90,11 @@ SET
   `order_state` = '已发货'
 WHERE `order_id` = #{id} ;
   </update>
+    <update id="updOrderInfoState" parameterType="OrderInfo">
+        UPDATE
+            `shoppingdb`.`order_info`
+        SET
+            `order_state` = #{orderState}
+        WHERE `order_id` = #{orderId} ;
+    </update>
 </mapper>

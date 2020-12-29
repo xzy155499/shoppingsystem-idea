@@ -1,6 +1,7 @@
 
 package com.guigu.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.guigu.service.UserMerchantsService;
 import com.guigu.vo.Area;
 import com.guigu.vo.UserMerchants;
@@ -17,12 +18,18 @@ public class UserMerchantsController {
 
     @Autowired
     UserMerchantsService service;
+
     @CrossOrigin
-    @RequestMapping("/addUserMerchants.action")
+    @RequestMapping(value = "/addUserMerchants.action")
     @ResponseBody
     public int addUserMerchants(UserMerchants userMerchants) {
-        System.out.println(userMerchants);
         return service.addUserMerchants(userMerchants);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/queUserMerchantsByUid.action",produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String queUserMerchantsByUid(int uid) {
+        return JSON.toJSONString(service.queUserMerchantsByUid(uid));
+    }
 }

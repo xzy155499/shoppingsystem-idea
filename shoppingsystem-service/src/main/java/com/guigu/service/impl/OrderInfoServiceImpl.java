@@ -187,4 +187,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         }
         return list;
     }
+
+    @Override
+    public int updOrderInfoState(OrderInfo orderInfo) {
+        return dao.updOrderInfoState(orderInfo);
+    }
 }

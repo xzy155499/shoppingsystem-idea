@@ -49,6 +49,10 @@
         select * from user_info where user_id=#{id}
     </select>
     <update id="editUser" parameterType="userinfo">
-        update user_info set user_name=#{user_name},photo=#{photo},user_sex=#{user_sex},birth_date=#{birth_date},id_number=#{id_number},phone=#{phone},account=#{account},pass=#{pass} where user_id=#{user_id}
+        update user_info set user_name=#{user_name},
+                             user_sex=#{user_sex},birth_date=#{birth_date},
+                             id_number=#{id_number},phone=#{phone},account=#{account},pass=#{pass}
+        <if test="photo!=''">,photo=#{photo}</if>
+        where user_id=#{user_id}
     </update>
 </mapper>

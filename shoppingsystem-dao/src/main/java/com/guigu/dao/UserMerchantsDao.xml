@@ -7,10 +7,23 @@
         <id property="umId" column="um_id"></id>
         <result property="uId" column="u_id"></result>
         <result property="mId" column="m_id"></result>
+        <collection property="merchants" javaType="com.guigu.vo.Merchants"
+                    column="m_id" select="com.guigu.dao.MerchantsDao.queryMerchantsById" fetchType="lazy">
+        </collection>
     </resultMap>
+    <select id="queUserMerchantsByMidAndUid" resultType="int">
+        SELECT count(*) FROM user_merchants WHERE u_id =#{uId} and m_id=#{mId}
+    </select>
+    <select id="queUserMerchantsByUid" resultMap="UserMerchantsMap">
+        SELECT * FROM user_merchants WHERE u_id =#{uid}
+    </select>
+
+
     <insert id="addUserMerchants" parameterType="UserMerchants">
         INSERT INTO `shoppingdb`.`user_merchants` ( `u_id`, `m_id`)
         VALUES
             ( #{uId}, #{mId}) ;
     </insert>
+
+
 </mapper>

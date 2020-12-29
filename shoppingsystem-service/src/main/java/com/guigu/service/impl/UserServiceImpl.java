@@ -1,8 +1,10 @@
 package com.guigu.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.guigu.dao.OrderInfoDao;
 import com.guigu.dao.UserDao;
 import com.guigu.service.UserService;
+import com.guigu.vo.OrderInfo;
 import com.guigu.vo.PageVo;
 import com.guigu.vo.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDao;
+    @Autowired
+    OrderInfoDao odao;
 
     @Override
     public UserInfo userLogin(UserInfo userInfo) {
@@ -60,5 +64,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserInfo> queDayUser() {
         return userDao.queDayUser();
+    }
+
+    @Override
+    public PageVo<OrderInfo> queOrderByUid(int uid, String state, int page, int rows) {
+        PageVo<OrderInfo> pageVo = new PageVo<>();
+        //放在 查询代码的前面
+        PageHelper.startPage(page,rows);
+        pageVo.setRows(odao.queOrderByUidAndState(uid,state));
+        pageVo.setTotal(odao.queOrderByUidAndStateCount(uid,state));
+        return pageVo;
     }
 }
